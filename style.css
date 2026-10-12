@@ -1,0 +1,35 @@
+.nav-icon-button {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ffffff;
+    color: #004aac;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    text-underline-offset: unset;
+}
+
+.nav-icon-button:hover,
+.nav-icon-button:focus {
+    background-color: #5070fe;
+    border: none;
+    color: #ffffff;
+    text-decoration: none;
+    text-underline-offset: unset;
+}
+
+.nav-icon-button:active,
+.nav-icon-button.active {
+    background-color: #004aac;
+    border: none;
+    color: #ffffff;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.nav-icon-button i {
+    font-size: 1.25rem;
+}
