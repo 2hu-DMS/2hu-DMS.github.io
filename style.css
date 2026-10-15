@@ -33,3 +33,16 @@
 .nav-icon-button i {
     font-size: 1.25rem;
 }
+
+.nav-icon-button img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.nav-icon-button:hover img,
+.nav-icon-button:focus img,
+.nav-icon-button:active img,
+.nav-icon-button.active img {
+    filter: brightness(0) invert(1);
+}
