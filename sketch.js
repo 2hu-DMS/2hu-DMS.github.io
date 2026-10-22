@@ -1,9 +1,11 @@
 let imgMapa;
 
-const MAPA_NORTE = -34.685658;
-const MAPA_SUR   = -34.685849;
-const MAPA_OESTE = -58.714808;
-const MAPA_ESTE  = -58.714650;
+// 1. Limites geograficos de la imagen del mapa (Calibracion)
+//Estos son los limites del predio. Forman un rectangulo de lineas/limites invisibles
+const MAPA_NORTE = -34.648710; // Latitud superior = la "y = 0" de la imagen
+const MAPA_SUR   = -34.653585; // Latitud inferior = la altura maxima de la imagen
+const MAPA_OESTE = -58.777695; // Longitud izquierda = el "x = 0" de la imagen
+const MAPA_ESTE  = -58.772530; // Longitud derecha = el ancho maximo de la imagen
 
 let miLatitud = 0;
 let miLongitud = 0;
