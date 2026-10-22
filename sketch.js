@@ -1,18 +1,17 @@
+// SKETCH.JS
+
 let imgMapa;
 
-//1. Limites geograficos de la imagen del mapa (Calibracion)
-//Estos son los limites del predio. Forman un rectangulo de lineas/limites invisibles
-const MAPA_NORTE = -34.648710; // Latitud superior = la "y = 0" de la imagen
-const MAPA_SUR   = -34.653585; // Latitud inferior = la altura maxima de la imagen
-const MAPA_OESTE = -58.777695; // Longitud izquierda = el "x = 0" de la imagen
-const MAPA_ESTE  = -58.772530; // Longitud derecha = el ancho maximo de la imagen
+// Paleta de colores para los bordes
+const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
+let indiceColorActual = 0; // Guardaremos el indice activo aca
 
-//Coordenadas de mi casa XD NO LO BORREN
-/*
-const MAPA_NORTE = -34.685658; 
-const MAPA_SUR   = -34.685849; 
-const MAPA_OESTE = -58.714808; 
-const MAPA_ESTE  = -58.714650;*/
+// 1. Limites geograficos de la imagen del mapa (Calibracion)
+const MAPA_NORTE = -34.648710; 
+//const MAPA_NORTE = -34.649210; 
+const MAPA_SUR   = -34.653585; 
+const MAPA_OESTE = -58.777695; 
+const MAPA_ESTE  = -58.772530; 
 
 let miLatitud = 0;
 let miLongitud = 0;
@@ -35,15 +34,15 @@ function preload() {
 
 function setup() {
   const contenedor = document.getElementById('map-container');
-  
-  // Crear canvas del tamanio exacto del contenedor
-  let canvas = createCanvas(contenedor.clientWidth, contenedor.clientHeight);
-  canvas.parent('map-container'); // Adjuntar el lienzo dentro del contenedor
+  let w = contenedor ? contenedor.clientWidth : windowWidth;
+  let h = contenedor ? contenedor.clientHeight : windowHeight;
+
+  let canvas = createCanvas(w, h);
+  if (contenedor) canvas.parent('map-container');
   
   panX = width / 2;
   panY = height / 2;
 
-  // Iniciar geolocalizacion
   if ("geolocation" in navigator) {
     navigator.geolocation.watchPosition(
       actualizarPosicion,
@@ -52,7 +51,6 @@ function setup() {
     );
   }
 
-  // Prevenir gestos tactiles por defecto en el lienzo
   let canvasElem = canvas.elt;
   canvasElem.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
   canvasElem.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
@@ -61,6 +59,7 @@ function setup() {
 function draw() {
   background(20);
 
+  // --- MAPA Y GPS ---
   push();
   translate(panX, panY);
   rotate(anguloRotacion);
@@ -69,6 +68,7 @@ function draw() {
   imageMode(CENTER);
   image(imgMapa, 0, 0);
 
+<<<<<<< HEAD
   
   // Dibujar ruta azul sobre el mapa
   stroke(0, 74, 172); // Color 004aac
@@ -77,16 +77,51 @@ function draw() {
 
 
   // Posicionar el círculo relativo al centro del SVG
+=======
+>>>>>>> 8733fc463133d0882160e589ddd385e8b14c162d
   let circuloX = posGpsMapa.x - imgMapa.width / 2;
   let circuloY = posGpsMapa.y - imgMapa.height / 2;
 
-  stroke(255);
-  strokeWeight(2 / zoom);
-  fill(0, 255, 150);
+  // Halo exterior GPS
+  noStroke();
+  fill(80, 112, 254, 100);
+  circle(circuloX, circuloY, 60 / zoom);
+
+  // Circulo central GPS
+  stroke('#ffffff');
+  strokeWeight(3 / zoom);
+  fill('#5070fe');
   circle(circuloX, circuloY, 24 / zoom);
 
   pop();
 
+  // --- EVALUACIÓN DE ZONAS / EDIFICIOS ---
+  // HISTORICO ALA ESTE
+  if (miLatitud <= -34.650754 && miLatitud >= -34.651862 &&
+      miLongitud >= -58.776526 && miLongitud <= -58.774492) {
+    indiceColorActual = 1;
+  }
+  // DARACT 1
+  else if (miLatitud <= -34.650131 && miLatitud >= -34.650785 &&
+           miLongitud >= -58.775172 && miLongitud <= -58.774890) {
+    indiceColorActual = 2;
+  }
+  // DARACT 2
+  else if (miLatitud <= -34.650727 && miLatitud >= -34.651311 &&
+           miLongitud >= -58.774560 && miLongitud <= -58.774328) {
+    indiceColorActual = 3;
+  } 
+  else {
+    indiceColorActual = 0; // Fuera de zonas conocidas
+  }
+
+  // --- BORDE MARCADOR DE PANTALLA ---
+  stroke(colorEdificio[indiceColorActual]);
+  strokeWeight(10);
+  noFill(); // Evita que cubra el lienzo con color solido
+  rect(0, 0, width, height);
+
+  // --- INTERFAZ ---
   dibujarInterfaz();
 }
 
@@ -94,9 +129,7 @@ function actualizarPosicion(position) {
   miLatitud = position.coords.latitude;
   miLongitud = position.coords.longitude;
 
-  // Aseguramos que la imagen esté cargada antes de mapear
   if (imgMapa.width > 0 && imgMapa.height > 0) {
-    // El 'true' al final restringe el valor dentro de los bordes del mapa
     posGpsMapa.x = map(miLongitud, MAPA_OESTE, MAPA_ESTE, 0, imgMapa.width, true);
     posGpsMapa.y = map(miLatitud, MAPA_NORTE, MAPA_SUR, 0, imgMapa.height, true);
   }
@@ -104,7 +137,6 @@ function actualizarPosicion(position) {
 
 function touchMoved() {
   if (touches.length === 1) {
-    // Arrastre fluido usando movedX / movedY
     panX += movedX;
     panY += movedY;
   } else if (touches.length === 2) {
