@@ -48,6 +48,36 @@
 }
 
 /* # Estilos compartidos */
+.page-inicio {
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+.inicio-button {
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 999px;
+    background-color: #004aac;
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.inicio-button:hover,
+.inicio-button:focus-visible {
+    background-color: #5070fe;
+}
+
+.inicio-button:focus-visible {
+    outline: 2px solid #004aac;
+    outline-offset: 3px;
+}
+
 .page-index,
 .page-map,
 .page-search {
