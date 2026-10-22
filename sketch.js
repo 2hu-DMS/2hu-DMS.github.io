@@ -44,13 +44,13 @@ function setup() {
   panY = height / 2;
 
   // Iniciar geolocalizacion
-  //if ("geolocation" in navigator) {
-    //navigator.geolocation.watchPosition(
-      //actualizarPosicion,
-      //errorGPS,
-      //{ enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
-    //);
-  //}
+  if ("geolocation" in navigator) {
+    navigator.geolocation.watchPosition(
+      actualizarPosicion,
+      errorGPS,
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
+    );
+  }
 
   // Prevenir gestos tactiles por defecto en el lienzo
   let canvasElem = canvas.elt;
@@ -68,6 +68,13 @@ function draw() {
   
   imageMode(CENTER);
   image(imgMapa, 0, 0);
+
+  
+  // Dibujar ruta azul sobre el mapa
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(3 / zoom);
+  line(-242, 75, -242, 480);
+
 
   // Posicionar el círculo relativo al centro del SVG
   let circuloX = posGpsMapa.x - imgMapa.width / 2;
