@@ -1,11 +1,18 @@
 let imgMapa;
 
-// 1. Limites geograficos de la imagen del mapa (Calibracion)
+//1. Limites geograficos de la imagen del mapa (Calibracion)
 //Estos son los limites del predio. Forman un rectangulo de lineas/limites invisibles
 const MAPA_NORTE = -34.648710; // Latitud superior = la "y = 0" de la imagen
 const MAPA_SUR   = -34.653585; // Latitud inferior = la altura maxima de la imagen
 const MAPA_OESTE = -58.777695; // Longitud izquierda = el "x = 0" de la imagen
 const MAPA_ESTE  = -58.772530; // Longitud derecha = el ancho maximo de la imagen
+
+//Coordenadas de mi casa XD NO LO BORREN
+/*
+const MAPA_NORTE = -34.685658; 
+const MAPA_SUR   = -34.685849; 
+const MAPA_OESTE = -58.714808; 
+const MAPA_ESTE  = -58.714650;*/
 
 let miLatitud = 0;
 let miLongitud = 0;
@@ -23,16 +30,20 @@ let anguloInicialToque = 0;
 let rotacionInicial = 0;
 
 function preload() {
-  imgMapa = loadImage('img/mapamedi.jpg');
+  imgMapa = loadImage('img/predio.jpg');
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  const contenedor = document.getElementById('map-container');
+  
+  // Crear canvas del tamanio exacto del contenedor
+  let canvas = createCanvas(contenedor.clientWidth, contenedor.clientHeight);
+  canvas.parent('map-container'); // Adjuntar el lienzo dentro del contenedor
   
   panX = width / 2;
   panY = height / 2;
 
-  // Iniciar geolocalización
+  // Iniciar geolocalizacion
   if ("geolocation" in navigator) {
     navigator.geolocation.watchPosition(
       actualizarPosicion,
@@ -41,11 +52,10 @@ function setup() {
     );
   }
 
-  let canvas = document.querySelector('canvas');
-  if (canvas) {
-    canvas.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
-    canvas.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
-  }
+  // Prevenir gestos tactiles por defecto en el lienzo
+  let canvasElem = canvas.elt;
+  canvasElem.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+  canvasElem.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
 }
 
 function draw() {
@@ -137,5 +147,8 @@ function errorGPS(err) {
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  const contenedor = document.getElementById('map-container');
+  if (contenedor) {
+    resizeCanvas(contenedor.clientWidth, contenedor.clientHeight);
+  }
 }
