@@ -7,8 +7,8 @@ const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
 let indiceColorActual = 0; // Guardaremos el indice activo aca
 
 // 1. Limites geograficos de la imagen del mapa (Calibracion)
-//const MAPA_NORTE = -34.648710; 
-const MAPA_NORTE = -34.649210; 
+const MAPA_NORTE = -34.648710; 
+//const MAPA_NORTE = -34.649210; 
 const MAPA_SUR   = -34.653585; 
 const MAPA_OESTE = -58.777695; 
 const MAPA_ESTE  = -58.772530; 
