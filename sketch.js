@@ -44,13 +44,13 @@ function setup() {
   panY = height / 2;
 
   // Iniciar geolocalizacion
-  if ("geolocation" in navigator) {
-    navigator.geolocation.watchPosition(
-      actualizarPosicion,
-      errorGPS,
-      { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
-    );
-  }
+  //if ("geolocation" in navigator) {
+    //navigator.geolocation.watchPosition(
+      //actualizarPosicion,
+      //errorGPS,
+      //{ enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
+    //);
+  //}
 
   // Prevenir gestos tactiles por defecto en el lienzo
   let canvasElem = canvas.elt;
