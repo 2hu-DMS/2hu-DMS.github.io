@@ -308,3 +308,22 @@
         transition-duration: 0.01ms;
     }
 }
+
+body.page-map {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Evita barras de desplazamiento */
+}
+
+#map-container {
+    width: 100vw;
+    height: calc(100vh - 65px); /* Ajusta los 65px según el alto de tu barra navbar */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Para asegurar que el canvas ocupe todo el div contenedor */
+#map-container canvas {
+    display: block;
+}
