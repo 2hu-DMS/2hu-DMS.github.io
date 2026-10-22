@@ -8,7 +8,7 @@ let indiceColorActual = 0; // Guardaremos el indice activo aca
 
 // 1. Limites geograficos de la imagen del mapa (Calibracion)
 //const MAPA_NORTE = -34.648710; 
-const MAPA_NORTE = -34.648910; 
+const MAPA_NORTE = -34.651010; 
 const MAPA_SUR   = -34.653585; 
 const MAPA_OESTE = -58.777695; 
 const MAPA_ESTE  = -58.772530; 
