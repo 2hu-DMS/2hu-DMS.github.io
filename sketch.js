@@ -1,6 +1,8 @@
 // SKETCH.JS
 
 let imgMapa;
+let daractI = localStorage.getItem('daractI') === 'true';
+let daractII = localStorage.getItem('daractII') === 'true';
 
 // Paleta de colores para los bordes
 const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
@@ -68,17 +70,46 @@ function draw() {
   imageMode(CENTER);
   image(imgMapa, 0, 0);
 
-<<<<<<< HEAD
+
   
-  // Dibujar ruta azul sobre el mapa
+  // ruta azul desde la salida
+  if (daractI) {
   stroke(0, 74, 172); // Color 004aac
-  strokeWeight(3 / zoom);
-  line(-242, 75, -242, 480);
+  strokeWeight(5 / zoom);
+  line(-1450, 430, -1450, 2800); //linea entrada
+  line(-1450, 430, -1110, 430); // linea - hasta el buffet 
+  line(-1110, 430, -1110, -145); // linea ! hasta el buffet 
+  line(-1110, -145, -1050, -145); // linea - hasta afuera
+  line(-1050, -145, -1050, -700); // linea ! hasta afuera
+  line(-1050, -700, -530, -830); // linea / hasta afuera
+  line(-530, -830, -40, -760); // linea / hasta afuera
+  line(-40, -760, 160, -830);
+  line( 160, -830, 280, -890);
+  line( 280, -890, 310, -880);
+  line( 310, -880, 470, -1130); //linea hasta el daract I
+  line( 470, -1130, 350, -1210); //linea hasta la entrada del daract I
+  }
+
+  if (daractII) {
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(5 / zoom);
+  line(-1450, 430, -1450, 2800); //linea entrada
+  line(-1450, 430, -1110, 430); // linea - hasta el buffet 
+  line(-1110, 430, -1110, -145); // linea ! hasta el buffet 
+  line(-1110, -145, -1050, -145); // linea - hasta afuera
+  line(-1050, -145, -1050, -700); // linea ! hasta afuera
+  line(-1050, -700, -530, -830); // linea / hasta afuera
+  line(-530, -830, -40, -760); // linea / hasta afuera
+  line(-40, -760, 160, -830);
+  line( 160, -830, 280, -890);
+  line( 280, -890, 420, -820);
+  line( 420, -820, 570, -1050); //linea hasta el daract I
+  line( 570, -1050, 670, -1000); //linea hasta la entrada del daract I
+  }
 
 
   // Posicionar el círculo relativo al centro del SVG
-=======
->>>>>>> 8733fc463133d0882160e589ddd385e8b14c162d
+
   let circuloX = posGpsMapa.x - imgMapa.width / 2;
   let circuloY = posGpsMapa.y - imgMapa.height / 2;
 
