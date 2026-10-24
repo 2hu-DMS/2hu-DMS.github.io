@@ -68,7 +68,7 @@
                         <button type="button" class="room-button">Aula 5</button>
                         <button type="button" class="room-button">Aula 6</button>
                         <button type="button" class="room-button">Biblioteca</button>
-                        <button type="button" class="room-button">Baños</button>
+                        <button type="button" class="room-button" data-room="sum">SUM</button>
                     </div>
                 </div>
             </div>
@@ -110,6 +110,8 @@
                 } else if (button.getAttribute('aria-controls') === 'options-daract-2') {
                     localStorage.setItem('daractI', 'false');
                     localStorage.setItem('daractII', 'true');
+                } else {
+                    localStorage.setItem('SUM', 'false');
                 }
 
                 const options = document.getElementById(button.getAttribute('aria-controls'));
@@ -139,6 +141,13 @@
             grid.addEventListener('click', (event) => {
                 const selectedButton = event.target.closest('.room-button');
                 if (!selectedButton) return;
+
+                const isSum = selectedButton.dataset.room === 'sum';
+                localStorage.setItem('SUM', String(isSum));
+                if (isSum) {
+                    localStorage.setItem('daractI', 'false');
+                    localStorage.setItem('daractII', 'true');
+                }
 
                 grid.querySelectorAll('.room-button').forEach((button) => {
                     button.classList.toggle('is-selected', button === selectedButton);

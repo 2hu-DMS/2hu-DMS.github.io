@@ -3,6 +3,7 @@
 let imgMapa;
 let daractI = localStorage.getItem('daractI') === 'true';
 let daractII = localStorage.getItem('daractII') === 'true';
+let SUM = localStorage.getItem('SUM') === 'true';
 
 // Paleta de colores para los bordes
 const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
@@ -76,7 +77,7 @@ function draw() {
   if (daractI) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line(-1450, 430, -1450, 2800); //linea entrada
+  line(-1450, 430, -1450, 600); //linea entrada
   line(-1450, 430, -1110, 430); // linea - hasta el buffet 
   line(-1110, 430, -1110, -145); // linea ! hasta el buffet 
   line(-1110, -145, -1050, -145); // linea - hasta afuera
@@ -93,7 +94,7 @@ function draw() {
   if (daractII) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line(-1450, 430, -1450, 2800); //linea entrada
+  line(-1450, 430, -1450, 600); //linea entrada
   line(-1450, 430, -1110, 430); // linea - hasta el buffet 
   line(-1110, 430, -1110, -145); // linea ! hasta el buffet 
   line(-1110, -145, -1050, -145); // linea - hasta afuera
@@ -103,8 +104,15 @@ function draw() {
   line(-40, -760, 160, -830);
   line( 160, -830, 280, -890);
   line( 280, -890, 420, -820);
-  line( 420, -820, 570, -1050); //linea hasta el daract I
-  line( 570, -1050, 670, -1000); //linea hasta la entrada del daract I
+  line( 420, -820, 570, -1050); //linea hasta el daract II
+  line( 570, -1050, 670, -1000); //linea hasta la entrada del daract II
+
+  if (SUM) {
+    stroke(0, 74, 172); // Color 004aac
+    strokeWeight(5 / zoom);
+    line( 670, -1000, 1800, -900); //linea hasta el SUM
+
+  }
   }
 
 
