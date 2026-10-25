@@ -80,7 +80,8 @@
 
 .page-index,
 .page-map,
-.page-search {
+.page-search,
+.page-edificios {
     font-family: 'Inter', sans-serif;
     font-size: 12pt;
     background-color: #d7deff;
@@ -104,25 +105,34 @@
 .page-search h3,
 .page-search h4,
 .page-search h5,
-.page-search h6 {
+.page-search h6,
+.page-edificios h1,
+.page-edificios h2,
+.page-edificios h3,
+.page-edificios h4,
+.page-edificios h5,
+.page-edificios h6 {
     font-size: 23pt;
 }
 
 .page-index .nav-icon-button,
 .page-map .nav-icon-button,
-.page-search .nav-icon-button {
+.page-search .nav-icon-button,
+.page-edificios .nav-icon-button {
     font-size: 15pt;
 }
 
 .page-index .navbar.fixed-bottom,
 .page-map .navbar.fixed-bottom,
-.page-search .navbar.fixed-bottom {
+.page-search .navbar.fixed-bottom,
+.page-edificios .navbar.fixed-bottom {
     background-color: #ffffff !important;
 }
 
 .page-index .navbar.fixed-bottom .nav-icon-button,
 .page-map .navbar.fixed-bottom .nav-icon-button,
-.page-search .navbar.fixed-bottom .nav-icon-button {
+.page-search .navbar.fixed-bottom .nav-icon-button,
+.page-edificios .navbar.fixed-bottom .nav-icon-button {
     margin: 0;
 }
 
@@ -172,7 +182,7 @@
     border-radius: 20px;
 }
 
-/* # search.html */
+/* # aulas.html */
 .page-search {
     --building-color-transition: background-color 0.5s ease, color 0.5s ease;
     transition: background-color 0.5s ease;
@@ -194,6 +204,36 @@
     max-width: 560px;
     margin-right: auto;
     margin-left: auto;
+}
+
+.page-edificios .building-list {
+    max-width: 560px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.page-edificios .building-button {
+    width: 100%;
+    min-height: 52px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 16px;
+    background-color: #ffffff;
+    color: #004aac;
+    font: inherit;
+    font-size: 15pt;
+}
+
+.page-edificios .building-button:hover,
+.page-edificios .building-button:active,
+.page-edificios .building-button:focus {
+    background-color: #ffffff;
+    color: #004aac;
+}
+
+.page-edificios .building-button:focus-visible {
+    outline: 2px solid #004aac;
+    outline-offset: 2px;
 }
 
 .page-search .building-item {

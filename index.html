@@ -23,7 +23,7 @@
             <a href="map.html" class="nav-icon-button" data-page="map" aria-label="Mapa">
                 <img src="img/icons/mapita.png" alt="" aria-hidden="true">
             </a>
-            <a href="search.html" class="nav-icon-button" data-page="search" aria-label="Buscar">
+            <a href="aulas.html" class="nav-icon-button" data-page="search" aria-label="Buscar">
                 <img src="img/icons/lupa.png" alt="" aria-hidden="true">
             </a>
         </div>
@@ -33,14 +33,14 @@
         <h1 class="fw-bold page-heading">¡Bienvenido/a! ¿A dónde vamos?</h1>
 
         <div class="d-flex justify-content-center gap-3 mt-4">
-            <button type="button" class="nav-icon-button home-action-button home-action-button--standard" aria-label="Edificios">
+            <a href="edificios.html" class="nav-icon-button home-action-button home-action-button--standard" aria-label="Edificios">
                 <img src="img/icons/edificios.png" alt="" aria-hidden="true">
                 Edificios
-            </button>
-            <button type="button" class="nav-icon-button home-action-button home-action-button--standard" aria-label="Aulas">
+            </a>
+            <a href="aulas.html" class="nav-icon-button home-action-button home-action-button--standard" aria-label="Aulas">
                 <img src="img/icons/aulas.png" alt="" aria-hidden="true">
                 Aulas
-            </button>
+            </a>
         </div>
 
         <div class="d-flex justify-content-center mt-3">
@@ -117,6 +117,24 @@
     </main>
 
     <script>
+        const edificiosLink = document.querySelector('.home-action-button[aria-label="Edificios"]');
+        edificiosLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            const destino = edificiosLink.href;
+            setTimeout(() => {
+                window.location.href = destino;
+            }, 180);
+        });
+
+        const aulasLink = document.querySelector('.home-action-button[aria-label="Aulas"]');
+        aulasLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            const destino = aulasLink.href;
+            setTimeout(() => {
+                window.location.href = destino;
+            }, 180);
+        });
+
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
         const navButtons = document.querySelectorAll('.navbar .nav-icon-button');
 
@@ -125,7 +143,7 @@
             const isCurrentPage =
                 (page === 'index' && currentPage === 'index.html') ||
                 (page === 'map' && currentPage === 'map.html') ||
-                (page === 'search' && currentPage === 'search.html');
+                (page === 'search' && currentPage === 'aulas.html');
 
             button.classList.toggle('active', isCurrentPage);
 

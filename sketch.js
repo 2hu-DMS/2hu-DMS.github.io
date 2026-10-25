@@ -4,6 +4,7 @@ let imgMapa;
 let banios;
 let accesible;
 let ascensor;
+let ubicacion_objetivo = new URLSearchParams(window.location.search).get('ubicacion_objetivo');
 
 // Paleta de colores para los bordes
 const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
@@ -50,10 +51,28 @@ let miLongitud = 0;
 
 let posGpsMapa = { x: 0, y: 0 };
 
+const RUTAS = {
+  daract1: [
+    { x: 3193, y: 3332 },
+    { x: 3533, y: 3317 },
+    { x: 3523, y: 2737 },
+    { x: 3603, y: 2742 },
+    { x: 3638, y: 2177 },
+    { x: 4103, y: 2067 },
+    { x: 4608, y: 2137 },
+    { x: 4953, y: 2002 },
+    { x: 5103, y: 1787 },
+    { x: 5003, y: 1682 }
+  ]
+};
+
 let panX = 0;
 let panY = 0;
 let zoom = 1.0;
 let anguloRotacion = 0;
+
+// TEMPORAL: captura las coordenadas del ultimo clic en el espacio de la imagen.
+let puntoClickMapa = null;
 
 let distToqueInicial = 0;
 let zoomInicial = 1.0;
@@ -118,10 +137,17 @@ function draw() {
     }
   }*/
 
-  // Dibujar ruta azul sobre el mapa <----------------------------- VICKY
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(3 / zoom);
-  line(-242, 75, -242, 480);
+  if (ubicacion_objetivo === 'daract1') {
+    const ruta = RUTAS.daract1;
+    noFill();
+    stroke('#014BAC');
+    strokeWeight(6 / zoom);
+    beginShape();
+    for (const punto of ruta) {
+      vertex(punto.x - imgMapa.width / 2, punto.y - imgMapa.height / 2);
+    }
+    endShape();
+  }
 
   // 2. DIBUJAR MARCADOR DE GPS
   let circuloX = posGpsMapa.x - imgMapa.width / 2;
@@ -210,6 +236,7 @@ function draw() {
 
   // --- INTERFAZ ---
   dibujarInterfaz();
+  dibujarPuntoClick();
 }
 
 /**
@@ -272,6 +299,25 @@ function touchStarted() {
   }
 }
 
+// TEMPORAL: quitar esta funcion y la variable puntoClickMapa cuando ya no se necesiten.
+function mousePressed() {
+  const dx = mouseX - panX;
+  const dy = mouseY - panY;
+  const cosRotacion = cos(anguloRotacion);
+  const sinRotacion = sin(anguloRotacion);
+
+  puntoClickMapa = {
+    x: (cosRotacion * dx + sinRotacion * dy) / zoom + imgMapa.width / 2,
+    y: (-sinRotacion * dx + cosRotacion * dy) / zoom + imgMapa.height / 2
+  };
+}
+
+function mouseDragged() {
+  panX += movedX;
+  panY += movedY;
+  return false;
+}
+
 function mouseWheel(event) {
   let factorZoom = event.delta > 0 ? 0.9 : 1.1;
   zoom = constrain(zoom * factorZoom, 0.2, 5.0);
@@ -290,6 +336,32 @@ function dibujarInterfaz() {
   text(`Longitud: ${miLongitud.toFixed(6)}`, 20, 38);
   text(`Zoom: ${zoom.toFixed(2)}x`, 20, 56);
   text(`Rotación: ${degrees(anguloRotacion).toFixed(1)}°`, 20, 74);
+}
+
+// TEMPORAL: muestra las coordenadas del ultimo clic, separadas del panel GPS.
+function dibujarPuntoClick() {
+  if (!puntoClickMapa) return;
+
+  const ancho = 230;
+  const alto = 58;
+  const margenDerecho = 10;
+  const margenInferior = 80;
+  const x = width - ancho - margenDerecho;
+  const y = height - alto - margenInferior;
+
+  noStroke();
+  fill('#004aac');
+  rect(x, y, ancho, alto, 8);
+
+  fill(255);
+  textSize(12);
+  textAlign(LEFT, TOP);
+  text('PUNTO CLICKEADO (px)', x + 12, y + 9);
+  text(
+    `X: ${puntoClickMapa.x.toFixed(1)}   Y: ${puntoClickMapa.y.toFixed(1)}`,
+    x + 12,
+    y + 32
+  );
 }
 
 function errorGPS(err) {
