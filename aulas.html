@@ -20,14 +20,14 @@
             <a href="map.html" class="nav-icon-button" data-page="map" aria-label="Mapa">
                 <img src="img/icons/mapita.png" alt="" aria-hidden="true">
             </a>
-            <a href="search.html" class="nav-icon-button" data-page="search" aria-label="Buscar">
+            <a href="aulas.html" class="nav-icon-button" data-page="search" aria-label="Buscar">
                 <img src="img/icons/lupa.png" alt="" aria-hidden="true">
             </a>
         </div>
     </nav>
 
     <main class="container text-center py-4">
-        <h1 class="fw-bold page-heading">Edificios</h1>
+        <h1 class="fw-bold page-heading">Aulas</h1>
 
         <div class="d-grid gap-3 mt-4 building-list">
             <div class="building-item">
@@ -175,7 +175,7 @@
             const isCurrentPage =
                 (page === 'index' && currentPage === 'index.html') ||
                 (page === 'map' && currentPage === 'map.html') ||
-                (page === 'search' && currentPage === 'search.html');
+                (page === 'search' && currentPage === 'aulas.html');
 
             button.classList.toggle('active', isCurrentPage);
 
