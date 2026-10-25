@@ -108,42 +108,50 @@ function draw() {
   if (Aula1y3) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line( 350, -1210, 230, -1280); //linea hasta el aula1
+  line( 350, -1210, 220, -1290); //linea hasta el aula1
+  line( 220, -1290, 190, -1250);
+  line( 220, -1290, 40, -1410); //linea hasta el aula3
+  line( 40, -1410, 30, -1380);
   }
   if (Aula2) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  line( 350, -1210, 150, -1350); //linea hasta el aula2
+  line( 150, -1350, 170, -1390); 
   }
   if (Aula4) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  line( 350, -1210, 120, -1370); //linea hasta el aula4
+  line( 120, -1370, 130, -1400);
   }
   if (Aula5y7) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  line( 350, -1210, 20, -1410); //linea hasta el aula5
+  line( 20, -1410, 0, -1390);
   }
   if (Aula6) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  line( 350, -1210, -60, -1480); //linea hasta el aula6
+  line( -60, -1480, -40, -1510);
   }
   if (Aula8) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  line( 350, -1210, -70, -1500); //linea hasta el aula8
+  line( -70, -1500, -90, -1530);
   }
   if (Banos) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  line( 350, -1210, 300, -1250); //linea hasta el 
   }
   if (Biblioteca) {
   stroke(0, 74, 172); // Color 004aac
   strokeWeight(5 / zoom);
-  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  line( 350, -1210, -150, -1530); //linea hasta el 
   }
   }
 
