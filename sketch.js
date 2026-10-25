@@ -4,6 +4,21 @@ let imgMapa;
 let daractI = localStorage.getItem('daractI') === 'true';
 let daractII = localStorage.getItem('daractII') === 'true';
 let SUM = localStorage.getItem('SUM') === 'true';
+let aula1y3 = localStorage.getItem('aula1y3') === 'true';
+let aula2 = localStorage.getItem('aula2') === 'true';
+let aula4 = localStorage.getItem('aula4') === 'true';
+let aula5 = localStorage.getItem('aula5') === 'true';
+let aula6 = localStorage.getItem('aula6') === 'true';
+let aula8 = localStorage.getItem('aula8') === 'true';
+let banos = localStorage.getItem('banos') === 'true';
+let Aula1y3 = localStorage.getItem('Aula1y3') === 'true';
+let Aula2 = localStorage.getItem('Aula2') === 'true';
+let Aula4 = localStorage.getItem('Aula4') === 'true';
+let Aula5y7 = localStorage.getItem('Aula5y7') === 'true';
+let Aula6 = localStorage.getItem('Aula6') === 'true';
+let Aula8 = localStorage.getItem('Aula8') === 'true';
+let Banos = localStorage.getItem('Banos') === 'true';
+let Biblioteca = localStorage.getItem('Biblioteca') === 'true';
 
 // Paleta de colores para los bordes
 const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
@@ -89,6 +104,47 @@ function draw() {
   line( 280, -890, 310, -880);
   line( 310, -880, 470, -1130); //linea hasta el daract I
   line( 470, -1130, 350, -1210); //linea hasta la entrada del daract I
+
+  if (Aula1y3) {
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(5 / zoom);
+  line( 350, -1210, 230, -1280); //linea hasta el aula1
+  }
+  if (Aula2) {
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(5 / zoom);
+  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  }
+  if (Aula4) {
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(5 / zoom);
+  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  }
+  if (Aula5y7) {
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(5 / zoom);
+  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  }
+  if (Aula6) {
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(5 / zoom);
+  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  }
+  if (Aula8) {
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(5 / zoom);
+  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  }
+  if (Banos) {
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(5 / zoom);
+  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  }
+  if (Biblioteca) {
+  stroke(0, 74, 172); // Color 004aac
+  strokeWeight(5 / zoom);
+  line( 350, -1210, 300, -1250); //linea hasta el aula1
+  }
   }
 
   if (daractII) {
@@ -107,10 +163,65 @@ function draw() {
   line( 420, -820, 570, -1050); //linea hasta el daract II
   line( 570, -1050, 670, -1000); //linea hasta la entrada del daract II
 
+  if (aula1y3) {
+    stroke(0, 74, 172); // Color 004aac
+    strokeWeight(5 / zoom);
+    line( 670, -1000, 800, -900); //linea hasta el aula1
+    line( 800, -900, 780, -870);
+    line( 800, -900, 980, -800); //linea hasta el aula3
+    line( 980, -800, 960, -770);
+  }
+
+  if (aula2) {
+    stroke(0, 74, 172); // Color 004aac
+    strokeWeight(5 / zoom);
+    line( 670, -1000, 890, -880); //linea hasta el aula2
+    line( 890, -880, 910, -905);
+  }
+
+  if (aula4) {
+    stroke(0, 74, 172); // Color 004aac
+    strokeWeight(5 / zoom);
+    line( 670, -1000, 910, -860); //linea hasta el aula4
+    line( 910, -860, 940, -895);
+  }
+
+  if (aula5) {
+    stroke(0, 74, 172); // Color 004aac
+    strokeWeight(5 / zoom);
+    line( 670, -1000, 1015, -780); //linea hasta el aula5
+    line( 1015, -780, 990, -750);
+    line( 1015, -780, 1180, -660);
+    line( 1180, -660, 1150, -625);
+  }
+
+  if (aula6) {
+    stroke(0, 74, 172); // Color 004aac
+    strokeWeight(5 / zoom);
+    line( 670, -1000, 1085, -740); //linea hasta el aula6
+    line( 1085, -740, 1110, -780);
+  }
+
+  if (aula8) {
+    stroke(0, 74, 172); // Color 004aac
+    strokeWeight(5 / zoom);
+    line( 670, -1000, 1110, -730); //linea hasta el aula8
+    line( 1110, -730, 1140, -770);
+  }
+
+  if (banos) {
+    stroke(0, 74, 172); // Color 004aac
+    strokeWeight(5 / zoom);
+    line( 670, -1000, 750, -950); //linea hasta el baños cerca de la entrada
+    line( 750, -950, 720, -910);
+    line( 750, -950, 1245, -630); //linea hasta el baños cerca de sum
+    line( 1245, -630, 1260, -650);
+  }
+
   if (SUM) {
     stroke(0, 74, 172); // Color 004aac
     strokeWeight(5 / zoom);
-    line( 670, -1000, 1800, -900); //linea hasta el SUM
+    line( 670, -1000, 1280, -600); //linea hasta el SUM
 
   }
   }

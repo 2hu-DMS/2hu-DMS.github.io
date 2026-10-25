@@ -44,14 +44,14 @@
                 </button>
                 <div class="building-options" id="options-daract-1" hidden>
                     <div class="room-grid">
-                        <button type="button" class="room-button">Aula 1</button>
-                        <button type="button" class="room-button">Aula 2</button>
-                        <button type="button" class="room-button">Aula 3</button>
-                        <button type="button" class="room-button">Aula 4</button>
-                        <button type="button" class="room-button">Aula 5</button>
-                        <button type="button" class="room-button">Aula 6</button>
-                        <button type="button" class="room-button">Biblioteca</button>
-                        <button type="button" class="room-button">Baños</button>
+                        <button type="button" class="room-button" data-room="Aula1y3">Aula 1-3</button>
+                        <button type="button" class="room-button" data-room="Aula2">Aula 2</button>
+                        <button type="button" class="room-button" data-room="Aula4">Aula 4</button>
+                        <button type="button" class="room-button" data-room="Aula5y7">Aula 5-7</button>
+                        <button type="button" class="room-button" data-room="Aula6">Aula 6</button>
+                        <button type="button" class="room-button" data-room="Aula8">Aula 8</button>
+                        <button type="button" class="room-button" data-room="Banos">Baños</button>
+                        <button type="button" class="room-button" data-room="Biblioteca">Biblioteca</button>
                     </div>
                 </div>
             </div>
@@ -61,13 +61,13 @@
                 </button>
                 <div class="building-options" id="options-daract-2" hidden>
                     <div class="room-grid">
-                        <button type="button" class="room-button">Aula 1</button>
-                        <button type="button" class="room-button">Aula 2</button>
-                        <button type="button" class="room-button">Aula 3</button>
-                        <button type="button" class="room-button">Aula 4</button>
-                        <button type="button" class="room-button">Aula 5</button>
-                        <button type="button" class="room-button">Aula 6</button>
-                        <button type="button" class="room-button">Biblioteca</button>
+                        <button type="button" class="room-button" data-room="aula1y3">Aula 1-3</button>
+                        <button type="button" class="room-button" data-room="aula2">Aula 2</button>
+                        <button type="button" class="room-button" data-room="aula4">Aula 4</button>
+                        <button type="button" class="room-button" data-room="aula5">Aula 5</button>
+                        <button type="button" class="room-button" data-room="aula6">Aula 6</button>
+                        <button type="button" class="room-button" data-room="aula8">Aula 8</button>
+                        <button type="button" class="room-button" data-room="banos">Baños</button>
                         <button type="button" class="room-button" data-room="sum">SUM</button>
                     </div>
                 </div>
@@ -142,8 +142,20 @@
                 const selectedButton = event.target.closest('.room-button');
                 if (!selectedButton) return;
 
-                const isSum = selectedButton.dataset.room === 'sum';
+                const selectedRoom = selectedButton.dataset.room;
+                const isSum = selectedRoom === 'sum';
+                const isDaractI = grid.closest('.building-options').id === 'options-daract-1';
+                const routeRooms = isDaractI
+                    ? ['Aula1y3', 'Aula2', 'Aula4', 'Aula5y7', 'Aula6', 'Aula8', 'Banos', 'Biblioteca']
+                    : ['aula1y3', 'aula2', 'aula4', 'aula5', 'aula6', 'aula8', 'banos'];
+                routeRooms.forEach((room) => {
+                    localStorage.setItem(room, String(selectedRoom === room));
+                });
                 localStorage.setItem('SUM', String(isSum));
+                if (isDaractI) {
+                    localStorage.setItem('daractI', 'true');
+                    localStorage.setItem('daractII', 'false');
+                }
                 if (isSum) {
                     localStorage.setItem('daractI', 'false');
                     localStorage.setItem('daractII', 'true');
