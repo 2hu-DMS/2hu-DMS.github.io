@@ -1,31 +1,10 @@
 // SKETCH.JS
 
 let imgMapa;
-<<<<<<< HEAD
-let daractI = localStorage.getItem('daractI') === 'true';
-let daractII = localStorage.getItem('daractII') === 'true';
-let SUM = localStorage.getItem('SUM') === 'true';
-let aula1y3 = localStorage.getItem('aula1y3') === 'true';
-let aula2 = localStorage.getItem('aula2') === 'true';
-let aula4 = localStorage.getItem('aula4') === 'true';
-let aula5 = localStorage.getItem('aula5') === 'true';
-let aula6 = localStorage.getItem('aula6') === 'true';
-let aula8 = localStorage.getItem('aula8') === 'true';
-let banos = localStorage.getItem('banos') === 'true';
-let Aula1y3 = localStorage.getItem('Aula1y3') === 'true';
-let Aula2 = localStorage.getItem('Aula2') === 'true';
-let Aula4 = localStorage.getItem('Aula4') === 'true';
-let Aula5y7 = localStorage.getItem('Aula5y7') === 'true';
-let Aula6 = localStorage.getItem('Aula6') === 'true';
-let Aula8 = localStorage.getItem('Aula8') === 'true';
-let Banos = localStorage.getItem('Banos') === 'true';
-let Biblioteca = localStorage.getItem('Biblioteca') === 'true';
-=======
 let banios;
 let accesible;
 let ascensor;
 let ubicacion_objetivo = new URLSearchParams(window.location.search).get('ubicacion_objetivo');
->>>>>>> 9b9e69e5fd74882ff63a0632c43525e6f589c50f
 
 // Paleta de colores para los bordes
 const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
@@ -144,155 +123,6 @@ function draw() {
   imageMode(CENTER);
   image(imgMapa, 0, 0);
 
-<<<<<<< HEAD
-
-  
-  // ruta azul desde la salida
-  if (daractI) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line(-1450, 430, -1450, 600); //linea entrada
-  line(-1450, 430, -1110, 430); // linea - hasta el buffet 
-  line(-1110, 430, -1110, -145); // linea ! hasta el buffet 
-  line(-1110, -145, -1050, -145); // linea - hasta afuera
-  line(-1050, -145, -1050, -700); // linea ! hasta afuera
-  line(-1050, -700, -530, -830); // linea / hasta afuera
-  line(-530, -830, -40, -760); // linea / hasta afuera
-  line(-40, -760, 160, -830);
-  line( 160, -830, 280, -890);
-  line( 280, -890, 310, -880);
-  line( 310, -880, 470, -1130); //linea hasta el daract I
-  line( 470, -1130, 350, -1210); //linea hasta la entrada del daract I
-
-  if (Aula1y3) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line( 350, -1210, 220, -1290); //linea hasta el aula1
-  line( 220, -1290, 190, -1250);
-  line( 220, -1290, 40, -1410); //linea hasta el aula3
-  line( 40, -1410, 30, -1380);
-  }
-  if (Aula2) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line( 350, -1210, 150, -1350); //linea hasta el aula2
-  line( 150, -1350, 170, -1390); 
-  }
-  if (Aula4) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line( 350, -1210, 120, -1370); //linea hasta el aula4
-  line( 120, -1370, 130, -1400);
-  }
-  if (Aula5y7) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line( 350, -1210, 20, -1410); //linea hasta el aula5
-  line( 20, -1410, 0, -1390);
-  }
-  if (Aula6) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line( 350, -1210, -60, -1480); //linea hasta el aula6
-  line( -60, -1480, -40, -1510);
-  }
-  if (Aula8) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line( 350, -1210, -70, -1500); //linea hasta el aula8
-  line( -70, -1500, -90, -1530);
-  }
-  if (Banos) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line( 350, -1210, 300, -1250); //linea hasta el 
-  }
-  if (Biblioteca) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line( 350, -1210, -150, -1530); //linea hasta el 
-  }
-  }
-
-  if (daractII) {
-  stroke(0, 74, 172); // Color 004aac
-  strokeWeight(5 / zoom);
-  line(-1450, 430, -1450, 600); //linea entrada
-  line(-1450, 430, -1110, 430); // linea - hasta el buffet 
-  line(-1110, 430, -1110, -145); // linea ! hasta el buffet 
-  line(-1110, -145, -1050, -145); // linea - hasta afuera
-  line(-1050, -145, -1050, -700); // linea ! hasta afuera
-  line(-1050, -700, -530, -830); // linea / hasta afuera
-  line(-530, -830, -40, -760); // linea / hasta afuera
-  line(-40, -760, 160, -830);
-  line( 160, -830, 280, -890);
-  line( 280, -890, 420, -820);
-  line( 420, -820, 570, -1050); //linea hasta el daract II
-  line( 570, -1050, 670, -1000); //linea hasta la entrada del daract II
-
-  if (aula1y3) {
-    stroke(0, 74, 172); // Color 004aac
-    strokeWeight(5 / zoom);
-    line( 670, -1000, 800, -900); //linea hasta el aula1
-    line( 800, -900, 780, -870);
-    line( 800, -900, 980, -800); //linea hasta el aula3
-    line( 980, -800, 960, -770);
-  }
-
-  if (aula2) {
-    stroke(0, 74, 172); // Color 004aac
-    strokeWeight(5 / zoom);
-    line( 670, -1000, 890, -880); //linea hasta el aula2
-    line( 890, -880, 910, -905);
-  }
-
-  if (aula4) {
-    stroke(0, 74, 172); // Color 004aac
-    strokeWeight(5 / zoom);
-    line( 670, -1000, 910, -860); //linea hasta el aula4
-    line( 910, -860, 940, -895);
-  }
-
-  if (aula5) {
-    stroke(0, 74, 172); // Color 004aac
-    strokeWeight(5 / zoom);
-    line( 670, -1000, 1015, -780); //linea hasta el aula5
-    line( 1015, -780, 990, -750);
-    line( 1015, -780, 1180, -660);
-    line( 1180, -660, 1150, -625);
-  }
-
-  if (aula6) {
-    stroke(0, 74, 172); // Color 004aac
-    strokeWeight(5 / zoom);
-    line( 670, -1000, 1085, -740); //linea hasta el aula6
-    line( 1085, -740, 1110, -780);
-  }
-
-  if (aula8) {
-    stroke(0, 74, 172); // Color 004aac
-    strokeWeight(5 / zoom);
-    line( 670, -1000, 1110, -730); //linea hasta el aula8
-    line( 1110, -730, 1140, -770);
-  }
-
-  if (banos) {
-    stroke(0, 74, 172); // Color 004aac
-    strokeWeight(5 / zoom);
-    line( 670, -1000, 750, -950); //linea hasta el baños cerca de la entrada
-    line( 750, -950, 720, -910);
-    line( 750, -950, 1245, -630); //linea hasta el baños cerca de sum
-    line( 1245, -630, 1260, -650);
-  }
-
-  if (SUM) {
-    stroke(0, 74, 172); // Color 004aac
-    strokeWeight(5 / zoom);
-    line( 670, -1000, 1280, -600); //linea hasta el SUM
-
-  }
-  }
-=======
   // 1. DIBUJAR RECTÁNGULOS DE EDIFICIOS BASADOS EN COORDENADAS
   /*if (imgMapa.width > 0 && imgMapa.height > 0) {
     for (let zona of ZONAS) {
@@ -306,7 +136,6 @@ function draw() {
       );
     }
   }*/
->>>>>>> 9b9e69e5fd74882ff63a0632c43525e6f589c50f
 
   if (ubicacion_objetivo === 'daract1') {
     const ruta = RUTAS.daract1;
@@ -320,12 +149,7 @@ function draw() {
     endShape();
   }
 
-<<<<<<< HEAD
-  // Posicionar el círculo relativo al centro del SVG
-
-=======
   // 2. DIBUJAR MARCADOR DE GPS
->>>>>>> 9b9e69e5fd74882ff63a0632c43525e6f589c50f
   let circuloX = posGpsMapa.x - imgMapa.width / 2;
   let circuloY = posGpsMapa.y - imgMapa.height / 2;
 
