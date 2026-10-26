@@ -15,10 +15,8 @@ const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
 let indiceColorActual = 0; 
 
 // 1. Límites geográficos de la imagen del mapa (Calibración)
-//const MAPA_NORTE = -34.648710; 
 const MAPA_NORTE = -34.649300; 
 const MAPA_SUR   = -34.653585; 
-//const MAPA_OESTE = -58.777695; 
 const MAPA_OESTE = -58.777400; 
 const MAPA_ESTE  = -58.772530; 
 
@@ -295,15 +293,14 @@ function setup() {
 }
 
 function draw() {
-  background(20);
+  background('#5070fe');
 
-  // --- MAPA, RECTÁNGULOS Y GPS ---
+  // --- MAPA, RUTA, GPS Y CARTELES (TODO BAJO LA MISMA CÁMARA) ---
   push();
   translate(panX, panY);
   scale(zoom);
-  rotate(anguloRotacion);
+  //rotate(anguloRotacion);
 
-  
   imageMode(CENTER);
   image(imgMapa, 0, 0);
 
@@ -321,10 +318,10 @@ function draw() {
     }
   }*/
 
-  if (ubicacion_objetivo === 'daract1' || ubicacion_objetivo === 'daract2') {
+    if (ubicacion_objetivo === 'daract1' || ubicacion_objetivo === 'daract2') {
     const ruta = RUTAS[ubicacion_objetivo];
     noFill();
-    stroke('#014BAC');
+    stroke('#004aac');
     strokeWeight(6 / zoom);
     beginShape();
     for (const punto of ruta) {
@@ -337,7 +334,7 @@ function draw() {
     const ruta = RUTASAULAS[ubicacion_objetivo_aulas];
     if (ruta) {
       noFill();
-      stroke('#014BAC');
+      stroke('#004aac');
       strokeWeight(6 / zoom);
       beginShape();
       for (const punto of ruta) {
@@ -367,73 +364,230 @@ function draw() {
   let circuloX = posGpsMapa.x - imgMapa.width / 2;
   let circuloY = posGpsMapa.y - imgMapa.height / 2;
 
-  // Halo exterior GPS
   noStroke();
   fill(80, 112, 254, 100);
   circle(circuloX, circuloY, 60 / zoom);
 
-  // Círculo central GPS
   stroke('#ffffff');
   strokeWeight(3 / zoom);
   fill('#5070fe');
   circle(circuloX, circuloY, 24 / zoom);
-
-  //000000000000000000000000000000000000000000000000000000000 CARTELES
   
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
   textFont('inter');
-  textSize(30);
   noStroke();
 
-  //DARACT 2
-  image(banios, 700, -880, 50, 50);
-  image(ascensor, 765, -1045, 50, 50);
+  function dibujarCartelIcono(fnDibujo, x, y, w, h) {
+    push();
+    translate(x, y);
+    //rotate(-anguloRotacion); 
+    fnDibujo();
+    pop();
+  }
 
-  fill('#004aac');
-  rect(840, -790, 130, 60, 7);
-  fill(255);
-  text(`Aula 1/3`, 840, -790);
+  function dibujarEdifiNom(fnDibujo, x, y, w, h) {
+    push();
+    translate(x, y);
+    //rotate(-anguloRotacion); 
+    scale(1 / zoom);         
+    fnDibujo();
+    pop();
+  }
 
-  fill('#004aac');
-  rect(1040, -660, 110, 60, 7);
-  fill(255);
-  text(`Aula 5`, 1040, -660);
+  // --- BAÑOS 1 --- 00000000000000000000000000000 DARACT II 0000000000000000000000000000000000
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 50, 50);
+  }, 700, -880);
 
-  fill('#004aac');
-  rect(900, -970, 110, 60, 7);
-  fill(255);
-  text(`Aula 2`, 900, -970);
+  // --- ASCENSOR ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(ascensor, 0, 0, 50, 50);
+  }, 765, -1045);
 
-  fill('#004aac');
-  rect(1000, -900, 110, 60, 7);
-  fill(255);
-  text(`Aula 4`, 1000, -900);
+  // --- AULA 1/3 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 120, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 1/3`, 0, 0);
+  }, 840, -790);
 
-  fill('#004aac');
-  rect(1090, -830, 110, 60, 7);
-  fill(255);
-  text(`Aula 6`, 1090, -830);
+  // --- AULA 5 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 5`, 0, 0);
+  }, 1040, -660);
 
-  fill('#004aac');
-  rect(1190, -760, 110, 60, 7);
-  fill(255);
-  text(`Aula 8`, 1190, -760);
+  // --- AULA 2 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 2`, 0, 0);
+  }, 900, -970);
 
-  image(banios, 1300, -700, 50, 50);
-  image(accesible, 1235, -700, 30, 30);
+  // --- AULA 4 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 4`, 0, 0);
+  }, 1000, -900);
 
-  fill('#004aac');
-  rect(1370, -510, 90, 60, 7);
-  fill(255);
-  text(`SUM`, 1370, -510);
+  // --- AULA 6 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 6`, 0, 0);
+  }, 1090, -830);
 
-  //DARACT 1
+  // --- AULA 8 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 8`, 0, 0);
+  }, 1190, -760);
 
-  pop();
+  // --- BAÑOS 2 ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 50, 50);
+  }, 1300, -700);
+
+  // --- ACCESIBLE ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(accesible, 0, 0, 30, 30);
+  }, 1235, -700);
+
+  // --- SUM ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 90, 60, 7);
+    fill(255);
+    textSize(24);
+    text(`SUM`, 0, 0);
+  }, 1370, -510);
+
+  dibujarEdifiNom(() => {
+    fill('#004aac');
+    rect(0, 0, 130, 60, 7);
+    fill(255);
+    textSize(20);
+    text(`DARACT 2`, 0, 0);
+  }, 1200, -1000);
+
+  // --- J003 --- 0000000000000000000000000000 HISTORICO ALA ESTE 0000000000000000000000000000
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`J003`, 0, 2);
+  }, 1116, 170);
+
+  // --- I001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`I001`, 0, 2);
+  }, 355, 170);
+
+  // --- H001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`H001`, 0, 2);
+  }, -20, 170);
+
+  // --- G001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`G001`, 0, 2);
+  }, -395, 170);
+
+  // --- F001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`F001`, 0, 2);
+  }, -772, 170);
+
+  // --- F003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`F003`, 0, 2);
+  }, -667, 367);
+
+  // --- F004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`F004`, 0, 2);
+  }, -560, 367);
+
+  // --- G004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`G004`, 0, 2);
+  }, -291, 367);
+
+  // --- F004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`H004`, 0, 2);
+  }, -184, 367);
+
+  // --- F004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textLeading(10);
+    textSize(12);
+    text(`Coordinación\n\nde Diseño`, 0, 2);
+  }, 85, 367);
+
+  pop(); // Fin de la matriz principal del mapa
+
+  // --- APLICAR RESTRICCIONES DE MOVIMIENTO (BOUNDS) ---
+  aplicarRestriccionesMapa();
 
   // --- EVALUACIÓN DE ZONAS / EDIFICIOS ---
-  indiceColorActual = 0; // Por defecto fuera de zonas
+  indiceColorActual = 0; 
   for (let zona of ZONAS) {
     if (miLatitud <= zona.latNorte && miLatitud >= zona.latSur &&
         miLongitud >= zona.lonOeste && miLongitud <= zona.lonEste) {
@@ -443,6 +597,7 @@ function draw() {
   }
 
   // --- BORDE MARCADOR DE PANTALLA ---
+  rectMode(CORNER);
   stroke(colorEdificio[indiceColorActual]);
   strokeWeight(10);
   noFill();
@@ -477,6 +632,27 @@ function dibujarRectanguloGeo(latNorte, latSur, lonOeste, lonEste, colorRelleno,
   rect(rectX, rectY, rectW, rectH);
 }*/
 
+// Función para restringir que el mapa no salga completamente de la pantalla
+function aplicarRestriccionesMapa() {
+  if (imgMapa.width > 0 && imgMapa.height > 0) {
+    // Calculamos el tamaño escalado del mapa en pantalla
+    let mapaAnchoEscalado = imgMapa.width * zoom;
+    let mapaAltoEscalado = imgMapa.height * zoom;
+
+    // Margen de tolerancia para que al menos una parte del mapa quede visible
+    let margenX = width * 0.75;
+    let margenY = height * 0.75;
+
+    let minX = -mapaAnchoEscalado / 2 - margenX;
+    let maxX = width + mapaAnchoEscalado / 2 + margenX;
+    let minY = -mapaAltoEscalado / 2 - margenY;
+    let maxY = height + mapaAltoEscalado / 2 + margenY;
+
+    panX = constrain(panX, minX, maxX);
+    panY = constrain(panY, minY, maxY);
+  }
+}
+
 function actualizarPosicion(position) {
   miLatitud = position.coords.latitude;
   miLongitud = position.coords.longitude;
@@ -489,17 +665,32 @@ function actualizarPosicion(position) {
 
 function touchMoved() {
   if (touches.length === 1) {
+    // Un dedo: Arrastrar el mapa libremente (Pan)
     panX += movedX;
     panY += movedY;
   } else if (touches.length === 2) {
+    // Dos dedos: Zoom (Pinch) y Rotación con pivote en el centro de la pantalla
     let distActual = dist(touches[0].x, touches[0].y, touches[1].x, touches[1].y);
+    
     if (distToqueInicial > 0) {
       let factor = distActual / distToqueInicial;
-      zoom = constrain(zoomInicial * factor, 0.2, 5.0);
+      let nuevoZoom = constrain(zoomInicial * factor, 0.2, 5.0);
+
+      // El zoom se mantiene fluido haciendo zoom hacia el centro de la pantalla
+      let centroX = width / 2;
+      let centroY = height / 2;
+      
+      panX = centroX - (centroX - panX) * (nuevoZoom / zoom);
+      panY = centroY - (centroY - panY) * (nuevoZoom / zoom);
+      zoom = nuevoZoom;
     }
 
+    // Calcular el nuevo ángulo y aplicar la rotación tomando el centro de la pantalla como eje
     let anguloActual = atan2(touches[1].y - touches[0].y, touches[1].x - touches[0].x);
-    anguloRotacion = rotacionInicial + (anguloActual - anguloInicialToque);
+    let deltaAngulo = anguloActual - anguloInicialToque;
+    
+    // Aplicamos el cambio de rotación
+    anguloRotacion = rotacionInicial + deltaAngulo;
   }
   return false;
 }
@@ -534,14 +725,18 @@ function mouseDragged() {
 
 function mouseWheel(event) {
   let factorZoom = event.delta > 0 ? 0.9 : 1.1;
-  zoom = constrain(zoom * factorZoom, 0.2, 5.0);
+  let nuevoZoom = constrain(zoom * factorZoom, 0.2, 5.0);
+  
+  panX = mouseX - (mouseX - panX) * (nuevoZoom / zoom);
+  panY = mouseY - (mouseY - panY) * (nuevoZoom / zoom);
+  zoom = nuevoZoom;
   return false;
 }
 
 function dibujarInterfaz() {
   noStroke();
-  fill(0, 200);
-  rect(10, 10, 240, 90, 8);
+  fill('rgba(0, 75, 172, 0.75)');
+  rect(10, 10, 140, 90, 8);
 
   fill(255);
   textSize(12);
