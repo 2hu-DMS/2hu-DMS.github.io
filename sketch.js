@@ -4,7 +4,10 @@ let imgMapa;
 let banios;
 let accesible;
 let ascensor;
-let ubicacion_objetivo = new URLSearchParams(window.location.search).get('ubicacion_objetivo');
+let globo;
+const parametrosUbicacion = new URLSearchParams(window.location.search);
+let ubicacion_objetivo = parametrosUbicacion.get('ubicacion_objetivo');
+let ubicacion_objetivo_aulas = parametrosUbicacion.get('ubicacion_objetivo_aulas');
 
 // Paleta de colores para los bordes
 const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
@@ -67,8 +70,8 @@ const RUTAS = {
   ],
   
   daract2: [
-    { x: 5009, y: 3225 },
-    { x: 3193, y: 3332 },
+    { x: 5000, y: 3197 },
+    { x: 5004, y: 3319 },
     { x: 3533, y: 3317 },
     { x: 3523, y: 2737 },
     { x: 3603, y: 2742 },
@@ -79,6 +82,169 @@ const RUTAS = {
     { x: 5059, y: 2063 },
     { x: 5221, y: 1834 },
     { x: 5325, y: 1902 },
+    ]
+};
+
+const RUTASAULAS = {
+  // desde la entrada del daract1
+  d1aula1y3: [
+    { x: 5003, y: 1682 },
+    { x: 4870, y: 1597 },
+    { x: 4689, y: 1479 },
+    { x: 4665, y: 1522 },
+    ],
+  d1aula2: [
+    { x: 5003, y: 1682 },
+    { x: 4795, y: 1543 },
+    { x: 4814, y: 1498 }
+    ],
+  d1aula4: [
+    { x: 5003, y: 1682 },
+    { x: 4770, y: 1515 },
+    { x: 4790, y: 1480 },
+    ],
+  d1aula5y7: [
+    { x: 5003, y: 1682 },
+    { x: 4666, y: 1468 },
+    { x: 4638, y: 1504 },
+    ],
+  d1aula6: [
+    { x: 5003, y: 1682 },
+    { x: 4595, y: 1408 },
+    { x: 4611, y: 1373 },
+    ],
+  d1aula8: [
+    { x: 5003, y: 1682 },
+    { x: 4572, y: 1389 },
+    { x: 4588, y: 1358 },
+    ],
+  d1biblioteca: [
+    { x: 5003, y: 1682 },
+    { x: 4362, y: 1287 },
+    ],
+  d1banos: [
+    { x: 5003, y: 1682 },
+    { x: 4917, y: 1643 },
+    { x: 4885, y: 1686 },
+    ],
+  
+  // desde la entrada del daract2
+  d2aula1y3: [
+    { x: 5325, y: 1902 },
+    { x: 5450, y: 1980 },
+    { x: 5415, y: 2033 },
+    ],
+  d2aula2: [
+    { x: 5325, y: 1902 },
+    { x: 5535, y: 2017 },
+    { x: 5561, y: 1977 },
+    ],
+  d2aula4: [
+    { x: 5325, y: 1902 },
+    { x: 5556, y: 2034 },
+    { x: 5586, y: 1993 },
+    ],
+  d2aula5: [
+    { x: 5325, y: 1902 },
+    { x: 5653, y: 2104 },
+    { x: 5629, y: 2144 },
+    { x: 5819, y: 2225 },
+    { x: 5788, y: 2272 },
+    ],
+  d2aula6: [
+    { x: 5325, y: 1902 },
+    { x: 5728, y: 2150 },
+    { x: 5757, y: 2111 },
+    ],
+  d2aula8: [
+    { x: 5325, y: 1902 },
+    { x: 5756, y: 2167 },
+    { x: 5780, y: 2126 },
+    ],
+  d2sum: [
+    { x: 5325, y: 1902 },
+    { x: 5946, y: 2308 },
+    ],
+  d2banos: [
+    { x: 5325, y: 1902 },
+    { x: 5387, y: 1944 },
+    { x: 5360, y: 1990 },
+    ],
+
+  //desde la entrada del salon i
+  salonH003: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4676, y: 3315 },
+    { x: 4676, y: 3354 },
+    ],
+  salonH002: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4567, y: 3315 },
+    { x: 4568, y: 3349 },
+    ],
+  salonH001: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4628, y: 3315 },
+    { x: 4628, y: 3211 },
+    ],
+  salonH004: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4628, y: 3319 },
+    { x: 4628, y: 3278 },
+    { x: 4491, y: 3278 },
+    ],
+  salonG004: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4362, y: 3315 },
+    { x: 4362, y: 3286 },
+    ],
+  salonG003: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4300, y: 3315 },
+    { x: 4300, y: 3354 },
+    ],
+  salonG002: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4190, y: 3315 },
+    { x: 4190, y: 3352 },
+    ],
+  salonG001: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4258, y: 3315 },
+    { x: 4258, y: 3210 },
+    ],
+  salonF004: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4258, y: 3319 },
+    { x: 4258, y: 3280 },
+    { x: 4121, y: 3280 },
+    ],
+  salonF003: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 4990, y: 3315 },
+    { x: 4990, y: 3290 },
+    ],
+  salonF002: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 3919, y: 3315 },
+    { x: 3919, y: 3351 },
+    ],
+  salonF001: [
+    { x: 5004, y: 3202 },
+    { x: 5004, y: 3319 },
+    { x: 3880, y: 3315 },
+    { x: 3880, y: 3205 },
     ]
 };
 
@@ -100,6 +266,7 @@ function preload() {
   banios = loadImage('img/servicios/banios.png');
   accesible = loadImage('img/servicios/accesible.png');
   ascensor = loadImage('img/servicios/ascensor.png');
+  globo = loadImage('img/icons/globo.png');
 }
 
 function setup() {
@@ -153,8 +320,8 @@ function draw() {
     }
   }*/
 
-  if (ubicacion_objetivo === 'daract1') {
-    const ruta = RUTAS.daract1;
+  if (ubicacion_objetivo === 'daract1' || ubicacion_objetivo === 'daract2') {
+    const ruta = RUTAS[ubicacion_objetivo];
     noFill();
     stroke('#014BAC');
     strokeWeight(6 / zoom);
@@ -163,6 +330,36 @@ function draw() {
       vertex(punto.x - imgMapa.width / 2, punto.y - imgMapa.height / 2);
     }
     endShape();
+  }
+
+  if (ubicacion_objetivo_aulas !== null) {
+    const ruta = RUTASAULAS[ubicacion_objetivo_aulas];
+    if (ruta) {
+      noFill();
+      stroke('#014BAC');
+      strokeWeight(6 / zoom);
+      beginShape();
+      for (const punto of ruta) {
+        vertex(punto.x - imgMapa.width / 2, punto.y - imgMapa.height / 2);
+      }
+      endShape();
+    }
+  }
+
+  const rutaObjetivo = ubicacion_objetivo_aulas !== null
+    ? RUTASAULAS[ubicacion_objetivo_aulas]
+    : ubicacion_objetivo !== null
+      ? RUTAS[ubicacion_objetivo]
+      : null;
+  if (rutaObjetivo && rutaObjetivo.length > 0) {
+    const destino = rutaObjetivo[rutaObjetivo.length - 1];
+    image(
+      globo,
+      destino.x - imgMapa.width / 2,
+      destino.y - imgMapa.height / 2,
+      66,
+      132
+    );
   }
 
   // 2. DIBUJAR MARCADOR DE GPS

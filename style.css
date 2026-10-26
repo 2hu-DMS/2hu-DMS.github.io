@@ -222,13 +222,19 @@
     color: #004aac;
     font: inherit;
     font-size: 15pt;
+    transition: all 0.2s ease-in-out;
 }
 
 .page-edificios .building-button:hover,
-.page-edificios .building-button:active,
 .page-edificios .building-button:focus {
-    background-color: #ffffff;
-    color: #004aac;
+    background-color: #5070fe;
+    color: #ffffff;
+}
+
+.page-edificios .building-button:active {
+    background-color: #004aac;
+    color: #ffffff;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .page-edificios .building-button:focus-visible {

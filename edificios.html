@@ -32,7 +32,7 @@
         <div class="d-grid gap-3 mt-4 building-list">
             <button type="button" class="building-button">Edificio histórico</button>
             <button type="button" class="building-button" id="daract1-button">Daract 1</button>
-            <button type="button" class="building-button">Daract 2</button>
+            <button type="button" class="building-button" id="daract2-button">Daract 2</button>
             <button type="button" class="building-button">Edificio de laboratorios</button>
             <button type="button" class="building-button">Dorrego 1</button>
             <button type="button" class="building-button">Edificio de mantenimiento</button>
@@ -41,7 +41,15 @@
 
     <script>
         document.getElementById('daract1-button').addEventListener('click', () => {
-            window.location.href = 'map.html?ubicacion_objetivo=daract1';
+            setTimeout(() => {
+                window.location.href = 'map.html?ubicacion_objetivo=daract1';
+            }, 180);
+        });
+
+        document.getElementById('daract2-button').addEventListener('click', () => {
+            setTimeout(() => {
+                window.location.href = 'map.html?ubicacion_objetivo=daract2';
+            }, 180);
         });
 
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
