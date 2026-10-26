@@ -5,6 +5,7 @@ let banios;
 let accesible;
 let ascensor;
 let globo;
+
 const parametrosUbicacion = new URLSearchParams(window.location.search);
 let ubicacion_objetivo = parametrosUbicacion.get('ubicacion_objetivo');
 let ubicacion_objetivo_aulas = parametrosUbicacion.get('ubicacion_objetivo_aulas');
