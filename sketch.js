@@ -266,6 +266,8 @@ function preload() {
   accesible = loadImage('img/servicios/accesible.png');
   ascensor = loadImage('img/servicios/ascensor.png');
   globo = loadImage('img/icons/globo.png');
+  encuentro = loadImage('img/icons/encuentro.png');
+  salida = loadImage('img/icons/salida.png');
 }
 
 function setup() {
@@ -425,6 +427,12 @@ function draw() {
     text(`Aula 5`, 0, 0);
   }, 1040, -660);
 
+  // --- ENCUENTRO ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(encuentro, 0, 0, 50, 50);
+  }, 900, -290);
+
   // --- AULA 2 ---
   dibujarCartelIcono(() => {
     fill('#004aac');
@@ -517,6 +525,12 @@ function draw() {
     text(`H001`, 0, 2);
   }, -20, 170);
 
+  // --- SALIDA H ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -113, 301);
+
   // --- G001 ---
   dibujarCartelIcono(() => {
     fill('#004aac');
@@ -562,7 +576,7 @@ function draw() {
     text(`G004`, 0, 2);
   }, -291, 367);
 
-  // --- F004 ---
+  // --- H004 ---
   dibujarCartelIcono(() => {
     fill('#004aac');
     rect(0, 0, 80, 50, 7);
@@ -571,15 +585,189 @@ function draw() {
     text(`H004`, 0, 2);
   }, -184, 367);
 
-  // --- F004 ---
+  // --- COORDINACION DISENIO ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 90, 45, 7);
+    fill(255);
+    textLeading(8);
+    textSize(12);
+    text(`Coordinación\n\nde Diseño`, 0, 2);
+  }, 85, 367);
+
+  // --- AULA TALLER ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 65, 50, 7);
+    fill(255);
+    textLeading(9);
+    textSize(16);
+    text(`Aula\n\nTaller`, 0, 2);
+  }, 200, 367);
+
+  // --- BANIO PEQUENIO J ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 30, 30);
+  }, 824, 340);
+
+  // --- SALIDA J ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, 754, 303);
+
+  // --- J001 ---
   dibujarCartelIcono(() => {
     fill('#004aac');
     rect(0, 0, 80, 50, 7);
     fill(255);
-    textLeading(10);
-    textSize(12);
-    text(`Coordinación\n\nde Diseño`, 0, 2);
-  }, 85, 367);
+    textSize(24);
+    text(`J001`, 0, 2);
+  }, 920, 367);
+
+  // --- J002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`J002`, 0, 2);
+  }, 1020, 367);
+
+  // --- BANIOS J---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 50, 50);
+  }, 1145, 367);
+
+  // --- H002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`H002`, 0, 2);
+  }, -41, 494);
+
+  // --- H003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`H003`, 0, 2);
+  }, 65, 494);
+
+  // --- G003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`G003`, 0, 2);
+  }, -311, 494);
+
+  // --- G002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`G002`, 0, 2);
+  }, -420, 494);
+
+  // --- F002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`F002`, 0, 2);
+  }, -688, 494);
+
+  // --- AULA POSGRADO ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 95, 50, 7);
+    fill(255);
+    textLeading(8);
+    textSize(16);
+    text(`Aula\n\nPosgrado`, 0, 0);
+  }, -794, 494);
+
+  // --- ASCENSOR F ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(ascensor, 0, 0, 50, 50);
+  }, -875, 470);
+
+  // --- SALIDA F ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -860, 303);
+
+  // --- F004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 40, 7);
+    fill(255);
+    textLeading(9);
+    textSize(14);
+    text(`Depart.\n\nde Radio`, 0, 1);
+  }, -845, 383);
+
+  // --- VICERRECTORADO ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 130, 30, 7);
+    fill(255);
+    textSize(16);
+    text(`Vicerrectorado`, 0, 0);
+  }, -1155, 485);
+
+  // --- BEDELIA HIST ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 95, 40, 7);
+    fill(255);
+    textSize(20);
+    text(`Bedelía`, 0, 1);
+  }, -1279, 495);
+
+  // --- RECTORADO ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 30, 7);
+    fill(255);
+    textSize(16);
+    text(`Rectorado`, 0, 0);
+  }, -1765, 485);
+
+  // --- TITULOS ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 85, 40, 7);
+    fill(255);
+    textSize(20);
+    text(`Títulos`, 0, 0);
+  }, -1660, 487);
+
+  // --- CARPA ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Carpa`, 0, 2);
+  }, -1453, 210);
+
+  // --- ENCUENTRO --- 00000000000000000000000000000000000000 DARACT 1 000000000000000000000000
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(encuentro, 0, 0, 50, 50);
+  }, -780, -1320);
 
   pop(); // Fin de la matriz principal del mapa
 

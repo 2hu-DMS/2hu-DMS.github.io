@@ -48,37 +48,66 @@
 }
 
 /* # Estilos compartidos */
-.page-inicio {
-    min-height: 100vh;
+.page-index {
+    background-image: url('img/ingreso.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    /*background-position: center center;*/
+    height: 100dvh;
+    width: 100vw;
     margin: 0;
-    display: grid;
-    place-items: center;
-    background-color: #ffffff;
-    font-family: Arial, sans-serif;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Inter';
 }
 
-.inicio-button {
-    display: inline-block;
-    padding: 12px 32px;
+.main-index {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo {
+    width: 60%;
+    margin-top: 10%;
+}
+
+.texto-index {
+    font-weight: bold;
+    margin-top: 4%;
+    font-size: 1.3rem;
+    color: #004aac;
+}
+
+.index-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 130%;
+    margin-bottom: 20%;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 3% 0;
     border-radius: 999px;
-    background-color: #004aac;
-    color: #ffffff;
-    font-size: 16px;
+    background-color: #ffffff;
+    color: #004aac;
+    font-size: 20px;
     text-decoration: none;
     transition: background-color 0.2s ease-in-out;
 }
 
-.inicio-button:hover,
-.inicio-button:focus-visible {
+.index-button:hover,
+.index-button:focus-visible {
     background-color: #5070fe;
 }
 
-.inicio-button:focus-visible {
+.index-button:focus-visible {
     outline: 2px solid #004aac;
     outline-offset: 3px;
 }
 
-.page-index,
+.page-inicio,
 .page-map,
 .page-search,
 .page-edificios {
@@ -88,12 +117,12 @@
     padding-bottom: 76px;
 }
 
-.page-index h1,
-.page-index h2,
-.page-index h3,
-.page-index h4,
-.page-index h5,
-.page-index h6,
+.page-inicio h1,
+.page-inicio h2,
+.page-inicio h3,
+.page-inicio h4,
+.page-inicio h5,
+.page-inicio h6,
 .page-map h1,
 .page-map h2,
 .page-map h3,
@@ -115,21 +144,21 @@
     font-size: 23pt;
 }
 
-.page-index .nav-icon-button,
+.page-inicio .nav-icon-button,
 .page-map .nav-icon-button,
 .page-search .nav-icon-button,
 .page-edificios .nav-icon-button {
     font-size: 15pt;
 }
 
-.page-index .navbar.fixed-bottom,
+.page-inicio .navbar.fixed-bottom,
 .page-map .navbar.fixed-bottom,
 .page-search .navbar.fixed-bottom,
 .page-edificios .navbar.fixed-bottom {
     background-color: #ffffff !important;
 }
 
-.page-index .navbar.fixed-bottom .nav-icon-button,
+.page-inicio .navbar.fixed-bottom .nav-icon-button,
 .page-map .navbar.fixed-bottom .nav-icon-button,
 .page-search .navbar.fixed-bottom .nav-icon-button,
 .page-edificios .navbar.fixed-bottom .nav-icon-button {
@@ -140,37 +169,37 @@
     color: #004aac;
 }
 
-/* # index.html */
-.page-index .home-action-button {
+/* # inicio.html */
+.page-inicio .home-action-button {
     gap: 8px;
     border-radius: 999px;
 }
 
-.page-index .home-action-button--standard {
+.page-inicio .home-action-button--standard {
     width: 140px;
 }
 
-.page-index .home-action-button--emergency {
+.page-inicio .home-action-button--emergency {
     width: 303px;
 }
 
-.page-index .home-action-button img {
+.page-inicio .home-action-button img {
     width: 24px;
     height: 24px;
     object-fit: contain;
 }
 
-.page-index #destinosCarousel {
+.page-inicio #destinosCarousel {
     touch-action: pan-y;
     user-select: none;
     cursor: grab;
 }
 
-.page-index #destinosCarousel.dragging {
+.page-inicio #destinosCarousel.dragging {
     cursor: grabbing;
 }
 
-.page-index .destino-card {
+.page-inicio .destino-card {
     aspect-ratio: 1;
     background: rgba(255, 255, 255, 0.45);
 }
@@ -347,6 +376,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .page-search,
     .page-search main h1,
     .page-search .building-button,
@@ -358,12 +388,14 @@
 body.page-map {
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Evita barras de desplazamiento */
+    overflow: hidden;
+    /* Evita barras de desplazamiento */
 }
 
 #map-container {
     width: 100vw;
-    height: calc(100vh - 65px); /* Ajusta los 65px según el alto de tu barra navbar */
+    height: calc(100vh - 65px);
+    /* Ajusta los 65px según el alto de tu barra navbar */
     position: absolute;
     top: 0;
     left: 0;
