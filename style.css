@@ -68,7 +68,7 @@
     flex-direction: column;
 }
 
-.logo {
+.logo-index {
     width: 60%;
     margin-top: 10%;
 }
@@ -117,8 +117,6 @@
     padding-bottom: 76px;
 }
 
-.page-inicio h1,
-.page-inicio h2,
 .page-inicio h3,
 .page-inicio h4,
 .page-inicio h5,
@@ -165,22 +163,32 @@
     margin: 0;
 }
 
-.page-heading {
+/* # inicio.html */
+.logo-inicio {
+    width: 60%;
+    margin-top: 10%;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.textos-inicio {
+    font-weight: bold;
+    font-size: 150%;
     color: #004aac;
 }
 
-/* # inicio.html */
 .page-inicio .home-action-button {
     gap: 8px;
     border-radius: 999px;
+    font-size: 110%;
 }
 
 .page-inicio .home-action-button--standard {
-    width: 140px;
+    width: 43%;
 }
 
 .page-inicio .home-action-button--emergency {
-    width: 303px;
+    width: 90%;
 }
 
 .page-inicio .home-action-button img {
@@ -212,6 +220,12 @@
 }
 
 /* # aulas.html */
+.titulo-aulas-edificios {
+    color: #004aac;
+    font-size: 100%;
+    font-weight: bold;
+}
+
 .page-search {
     --building-color-transition: background-color 0.5s ease, color 0.5s ease;
     transition: background-color 0.5s ease;
