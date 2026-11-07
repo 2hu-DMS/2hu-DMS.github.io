@@ -52,12 +52,45 @@ const ZONAS = [
 let miLatitud = 0;
 let miLongitud = 0;
 
+// TEMPORAL: para probar rutas sin GPS, permitir simular la zona actual con teclado.
+// Borrar esta sección cuando ya no haga falta la prueba manual.
+let zonaSimulada = null;
+
+function simularZonaConTeclado() {
+  if (miLatitud !== 0 || miLongitud !== 0) return;
+
+  if (key === '1') {
+    zonaSimulada = 'HISTORICO ALA ESTE';
+  } else if (key === '2') {
+    zonaSimulada = 'DARACT 1';
+  } else if (key === '3') {
+    zonaSimulada = 'DARACT 2';
+  }
+}
+
+// TEMPORAL: fin de simulación de zona por teclado.
+
 let posGpsMapa = { x: 0, y: 0 };
 
-const RUTAS = {
+function obtenerZonaActual() {
+  const zonaActual = ZONAS.find((zona) =>
+    miLatitud <= zona.latNorte &&
+    miLatitud >= zona.latSur &&
+    miLongitud >= zona.lonOeste &&
+    miLongitud <= zona.lonEste
+  );
+
+  return zonaActual ? zonaActual.nombre : null;
+}
+
+
+/// RUTAS DESDE EL HISTORICO ///
+const RUTASHIS = {
+  historico: [
+    { x: 3533, y: 3317 },
+  ],
+
   daract1: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
     { x: 3533, y: 3317 },
     { x: 3523, y: 2737 },
     { x: 3603, y: 2742 },
@@ -70,8 +103,6 @@ const RUTAS = {
   ],
   
   daract2: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
     { x: 3533, y: 3317 },
     { x: 3523, y: 2737 },
     { x: 3603, y: 2742 },
@@ -85,6 +116,7 @@ const RUTAS = {
     ]
 };
 
+/// RUTAS DE AULAS GENERALES ///
 const RUTASAULAS = {
   // desde la entrada del daract1
   d1aula1y3: [
@@ -172,82 +204,122 @@ const RUTASAULAS = {
     { x: 5360, y: 1990 },
     ],
 
-  //desde la entrada del salon i
+  //desde la entrada del historico
   salonH003: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4676, y: 3315 },
     { x: 4676, y: 3354 },
     ],
   salonH002: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4567, y: 3315 },
     { x: 4568, y: 3349 },
     ],
   salonH001: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4628, y: 3315 },
     { x: 4628, y: 3211 },
     ],
   salonH004: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4628, y: 3319 },
     { x: 4628, y: 3278 },
     { x: 4491, y: 3278 },
     ],
   salonG004: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4362, y: 3315 },
     { x: 4362, y: 3286 },
     ],
   salonG003: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4300, y: 3315 },
     { x: 4300, y: 3354 },
     ],
   salonG002: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4190, y: 3315 },
     { x: 4190, y: 3352 },
     ],
   salonG001: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4258, y: 3315 },
     { x: 4258, y: 3210 },
     ],
   salonF004: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4258, y: 3319 },
     { x: 4258, y: 3280 },
     { x: 4121, y: 3280 },
     ],
   salonF003: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 4990, y: 3315 },
     { x: 4990, y: 3290 },
     ],
   salonF002: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 3919, y: 3315 },
     { x: 3919, y: 3351 },
     ],
   salonF001: [
-    { x: 5004, y: 3202 },
-    { x: 5004, y: 3319 },
+    { x: 3535, y: 3317 },
     { x: 3880, y: 3315 },
     { x: 3880, y: 3205 },
     ]
 };
+
+
+///ACTUALIZACION NUEVA 7-11-2026 INICIO///
+/// RUTAS DESDE EL DARACT 1///
+const RUTASD1 = {
+  historico: [
+    { x: 5003, y: 1682 },
+    { x: 5117, y: 1765 },
+    { x: 4953, y: 2002 },
+    { x: 4608, y: 2137 },
+    { x: 4103, y: 2067 },
+    { x: 3638, y: 2177 },
+    { x: 3603, y: 2742 },
+    { x: 3523, y: 2737 },
+    { x: 3533, y: 3317 }
+  ],
+
+  daract1: [
+    { x: 5003, y: 1682 },
+  ],
+  
+  daract2: [
+    { x: 5003, y: 1682 },
+    { x: 5325, y: 1902 },
+    ]
+};
+
+/// RUTAS DESDE EL DARACT 2///
+const RUTASD2 = {
+  historico: [
+    { x: 5325, y: 1902 },
+    { x: 5221, y: 1834 },
+    { x: 5059, y: 2063 },
+    { x: 4953, y: 2002 },
+    { x: 4608, y: 2137 },
+    { x: 4103, y: 2067 },
+    { x: 3638, y: 2177 },
+    { x: 3603, y: 2742 },
+    { x: 3523, y: 2737 },
+    { x: 3533, y: 3317 }
+  ],
+
+  daract1: [
+    { x: 5325, y: 1902 },
+    { x: 5003, y: 1682 },
+  ],
+  
+  daract2: [
+    { x: 5325, y: 1902 },
+    ]
+};
+///ACTUALIZACION NUEVA 7-11-2026 FIN///
 
 //SALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDA
 /*const RUTASALIDAS = {
@@ -1071,8 +1143,32 @@ function draw() {
     }
   }*/
 
-  if (ubicacion_objetivo === 'daract1' || ubicacion_objetivo === 'daract2') {
-    const ruta = RUTAS[ubicacion_objetivo];
+
+///ACTUALIZACION NUEVA 7-11-2026 INICIO///
+  const zonaActual = obtenerZonaActual();
+
+  // TEMPORAL: para pruebas sin GPS, si miLatitud/miLongitud están en 0 se usa la zona simulada por teclado.
+  const zonaActiva = (miLatitud === 0 && miLongitud === 0) ? zonaSimulada : zonaActual;
+
+  const RUTAS_POR_ZONA = {
+    'HISTORICO ALA ESTE': {
+      rutas: RUTASHIS,
+      aulas: RUTASAULAS
+    },
+    'DARACT 1': {
+      rutas: RUTASD1,
+      aulas: RUTASAULAS
+    },
+    'DARACT 2': {
+      rutas: RUTASD2,
+      aulas: RUTASAULAS
+    }
+  };
+
+  const rutasZona = RUTAS_POR_ZONA[zonaActiva] || { rutas: {}, aulas: {} };
+
+  if (ubicacion_objetivo && rutasZona.rutas[ubicacion_objetivo]) {
+    const ruta = rutasZona.rutas[ubicacion_objetivo];
     noFill();
     stroke('#014BAC');
     strokeWeight(6 / zoom);
@@ -1083,24 +1179,22 @@ function draw() {
     endShape();
   }
 
-    if (ubicacion_objetivo_aulas !== null) {
-    const ruta = RUTASAULAS[ubicacion_objetivo_aulas];
-    if (ruta) {
-      noFill();
-      stroke('#014BAC');
-      strokeWeight(6 / zoom);
-      beginShape();
-      for (const punto of ruta) {
-        vertex(punto.x - imgMapa.width / 2, punto.y - imgMapa.height / 2);
-      }
-      endShape();
+  if (ubicacion_objetivo_aulas !== null && rutasZona.aulas[ubicacion_objetivo_aulas]) {
+    const ruta = rutasZona.aulas[ubicacion_objetivo_aulas];
+    noFill();
+    stroke('#014BAC');
+    strokeWeight(6 / zoom);
+    beginShape();
+    for (const punto of ruta) {
+      vertex(punto.x - imgMapa.width / 2, punto.y - imgMapa.height / 2);
     }
+    endShape();
   }
 
-    const rutaObjetivo = ubicacion_objetivo_aulas !== null
-    ? RUTASAULAS[ubicacion_objetivo_aulas]
+  const rutaObjetivo = ubicacion_objetivo_aulas !== null
+    ? rutasZona.aulas[ubicacion_objetivo_aulas]
     : ubicacion_objetivo !== null
-      ? RUTAS[ubicacion_objetivo]
+      ? rutasZona.rutas[ubicacion_objetivo]
       : null;
   if (rutaObjetivo && rutaObjetivo.length > 0) {
     const destino = rutaObjetivo[rutaObjetivo.length - 1];
@@ -1112,6 +1206,7 @@ function draw() {
       132
     );
   }
+  ///ACTUALIZACION NUEVA 7-11-2026 FIN///
 
   // 2. DIBUJAR MARCADOR DE GPS
   let circuloX = posGpsMapa.x - imgMapa.width / 2;
@@ -1226,6 +1321,21 @@ function dibujarRectanguloGeo(latNorte, latSur, lonOeste, lonEste, colorRelleno,
   strokeWeight(2 / zoom); // Mantiene el grosor del borde legible independiente del zoom
   rect(rectX, rectY, rectW, rectH);
 }*/
+
+// TEMPORAL: para probar la zona sin GPS y sin ubicar el teléfono, se usa el teclado.
+// Presionar: 1 = HISTORICO ALA ESTE, 2 = DARACT 1, 3 = DARACT 2.
+function keyPressed() {
+  if (miLatitud !== 0 || miLongitud !== 0) return;
+
+  if (key === '1') {
+    zonaSimulada = 'HISTORICO ALA ESTE';
+  } else if (key === '2') {
+    zonaSimulada = 'DARACT 1';
+  } else if (key === '3') {
+    zonaSimulada = 'DARACT 2';
+  }
+}
+// TEMPORAL: fin de prueba por teclado.
 
 function actualizarPosicion(position) {
   miLatitud = position.coords.latitude;

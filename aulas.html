@@ -164,6 +164,10 @@
                     localStorage.setItem(room, String(selectedRoom === room));
                 });
                 localStorage.setItem('SUM', String(isSum));
+                if (isHistorico) {
+                    localStorage.setItem('daractI', 'false');
+                    localStorage.setItem('daractII', 'false');
+                }
                 if (isDaractI) {
                     localStorage.setItem('daractI', 'true');
                     localStorage.setItem('daractII', 'false');
@@ -181,7 +185,9 @@
                     const params = new URLSearchParams({
                         ubicacion_objetivo_aulas: selectedButton.dataset.route
                     });
-                    if (isDaractI || isDaractII) {
+                    if (isHistorico) {
+                        params.set('ubicacion_objetivo', 'historico');
+                    } else if (isDaractI || isDaractII) {
                         params.set('ubicacion_objetivo', isDaractI ? 'daract1' : 'daract2');
                     }
                     setTimeout(() => {
