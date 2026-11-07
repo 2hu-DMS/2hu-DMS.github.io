@@ -164,12 +164,6 @@
 }
 
 /* # inicio.html */
-.logo-inicio {
-    width: 60%;
-    margin-top: 10%;
-    margin-left: 20%;
-    margin-right: 20%;
-}
 
 .textos-inicio {
     font-weight: bold;
@@ -183,21 +177,13 @@
     font-size: 110%;
 }
 
-.page-inicio .home-action-button--standard {
-    width: 43%;
-}
-
-.page-inicio .home-action-button--emergency {
-    width: 90%;
-}
-
 .page-inicio .home-action-button img {
     width: 24px;
     height: 24px;
     object-fit: contain;
 }
 
-.page-inicio #destinosCarousel {
+card .page-inicio #destinosCarousel {
     touch-action: pan-y;
     user-select: none;
     cursor: grab;
@@ -207,9 +193,50 @@
     cursor: grabbing;
 }
 
+/*0000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
 .page-inicio .destino-card {
-    aspect-ratio: 1;
-    background: rgba(255, 255, 255, 0.45);
+    border: 0px;
+    background: rgba(236, 8, 8, 0);
+}
+
+@media (max-width: 440px) {
+    .logo-inicio {
+        width: 60%;
+        margin-top: 5%;
+    }
+
+    .page-inicio .home-action-button--standard {
+        width: 43%;
+    }
+
+    .page-inicio .home-action-button--emergency {
+        width: 90%;
+    }
+
+    .page-inicio .dibujo-carta {
+        border-radius: 0.7rem;
+        width: 62%;
+    }
+}
+
+@media (min-width: 441px) {
+    .logo-inicio {
+        width: 20%;
+        margin-top: 3%;
+    }
+
+    .page-inicio .home-action-button--standard {
+        width: 19.3%;
+    }
+
+    .page-inicio .home-action-button--emergency {
+        width: 40%;
+    }
+
+    .page-inicio .dibujo-carta {
+        border-radius: 1rem;
+        width: 20%;
+    }
 }
 
 /* # map.html */

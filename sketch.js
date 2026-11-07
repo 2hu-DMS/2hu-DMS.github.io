@@ -5,6 +5,7 @@ let banios;
 let accesible;
 let ascensor;
 let globo;
+
 const parametrosUbicacion = new URLSearchParams(window.location.search);
 let ubicacion_objetivo = parametrosUbicacion.get('ubicacion_objetivo');
 let ubicacion_objetivo_aulas = parametrosUbicacion.get('ubicacion_objetivo_aulas');
@@ -14,19 +15,17 @@ const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
 let indiceColorActual = 0; 
 
 // 1. Límites geográficos de la imagen del mapa (Calibración)
-//const MAPA_NORTE = -34.648710; 
-const MAPA_NORTE = -34.649300; 
+const MAPA_NORTE = -34.648770; 
 const MAPA_SUR   = -34.653585; 
-//const MAPA_OESTE = -58.777695; 
-const MAPA_OESTE = -58.777400; 
+const MAPA_OESTE = -58.777830; 
 const MAPA_ESTE  = -58.772530; 
 
 // Definición de zonas/edificios con sus coordenadas extremas
 const ZONAS = [
   {
     nombre: "HISTORICO ALA ESTE",
-    latNorte: -34.650754, latSur: -34.651862,
-    lonOeste: -58.776526, lonEste: -58.774492,
+    latNorte: -34.651320, latSur: -34.651930,
+    lonOeste: -58.775925, lonEste: -58.774335,
     colorRelleno: 'rgba(0, 74, 172, 0.35)',
     colorBorde: '#004aac',
     indiceColor: 1
@@ -54,7 +53,7 @@ let miLongitud = 0;
 
 // TEMPORAL: para probar rutas sin GPS, permitir simular la zona actual con teclado.
 // Borrar esta sección cuando ya no haga falta la prueba manual.
-let zonaSimulada = null;
+/*let zonaSimulada = null;
 
 function simularZonaConTeclado() {
   if (miLatitud !== 0 || miLongitud !== 0) return;
@@ -66,9 +65,7 @@ function simularZonaConTeclado() {
   } else if (key === '3') {
     zonaSimulada = 'DARACT 2';
   }
-}
-
-// TEMPORAL: fin de simulación de zona por teclado.
+}*/
 
 let posGpsMapa = { x: 0, y: 0 };
 
@@ -82,7 +79,6 @@ function obtenerZonaActual() {
 
   return zonaActual ? zonaActual.nombre : null;
 }
-
 
 /// RUTAS DESDE EL HISTORICO ///
 const RUTASHIS = {
@@ -321,756 +317,6 @@ const RUTASD2 = {
 };
 ///ACTUALIZACION NUEVA 7-11-2026 FIN///
 
-//SALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDASALIDA
-/*const RUTASALIDAS = {
-S1: [ 
-{ x: 4256, y: 3315 }, //salida desde el G hasta el punto de encuentro
-{ x: 3879, y: 3315 }, 
-{ x: 3879, y: 3243 },
-{ x: 3597, y: 2199 }, 
-{ x: 3866, y: 2126 }, 
-{ x: 3866, y: 1608 }, 
-],
-
-S2: [ 
-{ x: 5006, y: 3315 }, //salida desde el I hasta el puento de encuentro
-{ x: 4631, y: 3315 }, 
-{ x: 4631, y: 3264 }, 
-{ x: 5481, y: 2862 }, 
-{ x: 5481, y: 2610 }, 
-{ x: 5514, y: 2610 }, 
-],
-
-S3: [ 
-{ x: 5644, y: 2096 }, //salida desde el J hasta el punto de encuentro
-{ x: 5432, y: 3315 },
-{ x: 5432, y: 2864 }, 
-{ x: 5481, y: 2862 }, 
-{ x: 5481, y: 2610 }, 
-{ x: 5514, y: 2610 }, 
-],
-
-S4: [ 
-{ x: 4677, y: 1470 }, //salida principal desde el daractI hasta el punto de encuentro
-{ x: 5117, y: 1765 },
-{ x: 4953, y: 2002 }, 
-{ x: 4640, y: 1797 }, 
-{ x: 4245, y: 1718 }, 
-{ x: 3866, y: 1608 },
-],
-
-S5: [ 
-{ x: 4677, y: 1470 }, //salida desde el daractI hasta el punto de encuentro
-{ x: 4392, y: 1315 },
-{ x: 4243, y: 1548 },
-{ x: 4640, y: 1797 }, 
-{ x: 4245, y: 1718 }, 
-{ x: 3866, y: 1608 }, 
-],
-
-S6: [ 
-{ x: 5642, y: 2097 }, //salida principal desde el daractII hasta el punto de encuentro
-{ x: 5221, y: 1834 },
-{ x: 5059, y: 2063 }, 
-{ x: 5870, y: 2603 }, 
-{ x: 5514, y: 2741 }, 
-{ x: 5514, y: 2610 }, 
-],
-
-S7: [ 
-{ x: 4677, y: 1470 }, //salida desde el daractII hasta el punto de encuentro
-{ x: 5905, y: 2279 },
-{ x: 5746, y: 2516 }, 
-{ x: 5870, y: 2603 }, 
-{ x: 5514, y: 2741 }, 
-{ x: 5514, y: 2610 }, 
-],
-
-//daract 1 hasta el salon
-SD1-H003: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4676, y: 3315 }, 
-{ x: 4676, y: 3354 }, 
-],
-
-SD1-H002: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4567, y: 3315 }, 
-{ x: 4568, y: 3349 }, 
-],
-
-SD1-H001: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 }, 
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4628, y: 3315 }, 
-{ x: 4628, y: 3211 }, 
-], 
-
-SD1-H004: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 4628, y: 3219 }, 
-{ x: 4628, y: 3278 }, 
-{ x: 4491, y: 3278 }, 
-],
-
-SD1-G004: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 }, 
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4362, y: 3315 }, 
-{ x: 4362, y: 3286 }, 
-],
-
-SD1-G003: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4300, y: 3315 }, 
-{ x: 4300, y: 3354 }, 
-],
-
-SD1-G002: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 }, 
-{ x: 3533, y: 3317 }, 
-{ x: 4190, y: 3315 }, 
-{ x: 4190, y: 3352 }, 
-], 
-
-SD1-G001: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 }, 
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4258, y: 3315 }, 
-{ x: 4258, y: 3210 }, 
-], 
-
-SD1-F004: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 4258, y: 3219 }, 
-{ x: 4258, y: 3280 }, 
-{ x: 4121, y: 3280 }, 
-], 
-
-SD1-F003: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 }, 
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 }, 
-{ x: 3533, y: 3317 }, 
-{ x: 4990, y: 3315 }, 
-{ x: 4990, y: 3290 }, 
-],
-
-SD1-F002: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 3919, y: 3315 },
-{ x: 3919, y: 3351 }, 
-],
-
-SD1-F001: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 3880, y: 3315 }, 
-{ x: 3880, y: 3205 }, 
-], 
-
-SD1-I001: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 5003, y: 3315 }, 
-{ x: 5003, y: 3201 }, 
-],
-
-SD1-J001: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 5597, y: 3315 }, 
-{ x: 5597, y: 3276 }, 
-],
-
-SD1-J002: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 5692, y: 3315 }, 
-{ x: 5692, y: 3276 }, 
-],
-
-SD1-J003: [ 
-{ x: 5003, y: 1682 }, 
-{ x: 5117, y: 1765 }, 
-{ x: 4953, y: 2002 }, 
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 5741, y: 3315 }, 
-{ x: 5741, y: 3204 },
-], 
-
-
-//daract 2 hasta el salon
-SD2-H003: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 4676, y: 3315 }, 
-{ x: 4676, y: 3354 }, 
-], 
-
-SD2-H002: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 }, 
-{ x: 4567, y: 3315 }, 
-{ x: 4568, y: 3349 }, 
-],
-
-SD2-H001: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 4628, y: 3315 }, 
-{ x: 4628, y: 3211 }, 
-], 
-
-SD2-H004: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 },
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 4628, y: 3219 }, 
-{ x: 4628, y: 3278 }, 
-{ x: 4491, y: 3278 }, 
-], 
-
-SD2-G004: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4362, y: 3315 }, 
-{ x: 4362, y: 3286 }, 
-], 
-
-SD2-G003: [
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 4300, y: 3315 }, 
-{ x: 4300, y: 3354 }, 
-], 
-
-SD2-G002: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4190, y: 3315 }, 
-{ x: 4190, y: 3352 }, 
-],
-
-SD2-G001: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4258, y: 3315 }, 
-{ x: 4258, y: 3210 }, 
-], 
-
-SD2-F004: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4258, y: 3219 }, 
-{ x: 4258, y: 3280 },
-{ x: 4121, y: 3280 }, 
-], 
-
-SD2-F003: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 4990, y: 3315 }, 
-{ x: 4990, y: 3290 }, 
-],
-
-SD2-F002: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 }, 
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 },
-{ x: 3919, y: 3315 }, 
-{ x: 3919, y: 3351 }, 
-], 
-
-SD2-F001: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 3880, y: 3315 }, 
-{ x: 3880, y: 3205 }, 
-],
-
-SD2-I001: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 5003, y: 3315 }, 
-{ x: 5003, y: 3201 }, 
-],
-
-SD2-J001: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 5597, y: 3315 }, 
-{ x: 5597, y: 3276 }, 
-],
-
-SD2-J002: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 5692, y: 3315 }, 
-{ x: 5692, y: 3276 }, 
-],
-
-SD2-J003: [ 
-{ x: 5325, y: 1902 }, 
-{ x: 5221, y: 1834 }, 
-{ x: 5059, y: 2063 },
-{ x: 4953, y: 2002 },
-{ x: 4608, y: 2137 },
-{ x: 4103, y: 2067 },
-{ x: 3638, y: 2177 },
-{ x: 3603, y: 2742 },
-{ x: 3523, y: 2737 },
-{ x: 3533, y: 3317 }, 
-{ x: 5741, y: 3315 }, 
-{ x: 5741, y: 3204 }, 
-],
-
-//salida mas cercana, salida 1 hasta el daract 2
-SD2-S1-F001: [ 
-{ x: 3880, y: 3205 },
-{ x: 3880, y: 3238 },
-{ x: 3810, y: 3238 }, 
-{ x: 3810, y: 2900 }, 
-{ x: 3609, y: 2900 },
-{ x: 3609, y: 2182 }, 
-{ x: 3638, y: 2177 },
-{ x: 4103, y: 2067 }, 
-{ x: 4608, y: 2137 }, 
-{ x: 4953, y: 2002 },
-{ x: 5059, y: 2063 },
-{ x: 5221, y: 1834 }, 
-{ x: 5325, y: 1902 }, 
- 
-SD2-S1-F002: [ 
-{ x: 3919, y: 3351 },
-{ x: 3919, y: 3315 },
-{ x: 3880, y: 3315 },
-{ x: 3880, y: 3238 },
-{ x: 3810, y: 3238 }, 
-{ x: 3810, y: 2900 }, 
-{ x: 3609, y: 2900 },
-{ x: 3609, y: 2182 }, 
-{ x: 3638, y: 2177 },
-{ x: 4103, y: 2067 }, 
-{ x: 4608, y: 2137 }, 
-{ x: 4953, y: 2002 },
-{ x: 5059, y: 2063 },
-{ x: 5221, y: 1834 }, 
-{ x: 5325, y: 1902 },
-
-SD2-S1-F003: [ 
-{ x: 4990, y: 3290 },
-{ x: 4990, y: 3315 },
-{ x: 3880, y: 3315 },
-{ x: 3880, y: 3238 },
-{ x: 3810, y: 3238 }, 
-{ x: 3810, y: 2900 }, 
-{ x: 3609, y: 2900 },
-{ x: 3609, y: 2182 }, 
-{ x: 3638, y: 2177 },
-{ x: 4103, y: 2067 }, 
-{ x: 4608, y: 2137 }, 
-{ x: 4953, y: 2002 },
-{ x: 5059, y: 2063 },
-{ x: 5221, y: 1834 }, 
-{ x: 5325, y: 1902 },
-
-SD2-S1-F004: [ 
-{ x: 4121, y: 3280 },
-{ x: 4258, y: 3280 },
-{ x: 4258, y: 3315 },
-{ x: 3880, y: 3315 },
-{ x: 3880, y: 3238 },
-{ x: 3810, y: 3238 }, 
-{ x: 3810, y: 2900 }, 
-{ x: 3609, y: 2900 },
-{ x: 3609, y: 2182 }, 
-{ x: 3638, y: 2177 },
-{ x: 4103, y: 2067 }, 
-{ x: 4608, y: 2137 }, 
-{ x: 4953, y: 2002 },
-{ x: 5059, y: 2063 },
-{ x: 5221, y: 1834 }, 
-{ x: 5325, y: 1902 },
-
-SD2-S1-G001: [ 
-{ x: 4258, y: 3210 },
-{ x: 4258, y: 3315 },
-{ x: 3880, y: 3315 },
-{ x: 3880, y: 3238 },
-{ x: 3810, y: 3238 }, 
-{ x: 3810, y: 2900 }, 
-{ x: 3609, y: 2900 },
-{ x: 3609, y: 2182 }, 
-{ x: 3638, y: 2177 },
-{ x: 4103, y: 2067 }, 
-{ x: 4608, y: 2137 }, 
-{ x: 4953, y: 2002 },
-{ x: 5059, y: 2063 },
-{ x: 5221, y: 1834 }, 
-{ x: 5325, y: 1902 },
-
-SD2-S1-G002: [ 
-{ x: 4190, y: 3352 },
-{ x: 4190, y: 3315 },
-{ x: 3880, y: 3315 },
-{ x: 3880, y: 3238 },
-{ x: 3810, y: 3238 }, 
-{ x: 3810, y: 2900 }, 
-{ x: 3609, y: 2900 },
-{ x: 3609, y: 2182 }, 
-{ x: 3638, y: 2177 },
-{ x: 4103, y: 2067 }, 
-{ x: 4608, y: 2137 }, 
-{ x: 4953, y: 2002 },
-{ x: 5059, y: 2063 },
-{ x: 5221, y: 1834 }, 
-{ x: 5325, y: 1902 },
-
-//salida mas cercana, salida 2 hasta el daract 2
-SD2-S2-G003: [ 
-{ x: 4300, y: 3354 },
-{ x: 4300, y: 3315 },
-{ x: 4628, y: 3315 },
-{ x: 4628, y: 3246 },
-{ x: 4560, y: 3246 }, 
-{ x: 4560, y: 2900 },
-{ x: 6008, y: 2900 },
-{ x: 6100, y: 2750 }, 
-{ x: 5750, y: 2516 }, 
-{ x: 5905, y: 2279 },
-{ x: 4677, y: 1470 }, 
-
-SD2-S2-G004: [ 
-{ x: 4362, y: 3286 },
-{ x: 4362, y: 3315 },
-{ x: 4628, y: 3315 },
-{ x: 4628, y: 3246 },
-{ x: 4560, y: 3246 }, 
-{ x: 4560, y: 2900 },
-{ x: 6008, y: 2900 },
-{ x: 6100, y: 2750 }, 
-{ x: 5750, y: 2516 }, 
-{ x: 5905, y: 2279 },
-{ x: 4677, y: 1470 }, 
-],
-
-SD2-S2-H004: [ 
-{ x: 4491, y: 3278 },
-{ x: 4560, y: 3278 },
-{ x: 4560, y: 3246 }, 
-{ x: 4560, y: 2900 },
-{ x: 6008, y: 2900 },
-{ x: 6100, y: 2750 }, 
-{ x: 5750, y: 2516 }, 
-{ x: 5905, y: 2279 },
-{ x: 4677, y: 1470 }, 
-],
-
-SD2-S2-H001: [ 
-{ x: 4628, y: 3185 },
-{ x: 4628, y: 3246 },
-{ x: 4560, y: 3246 }, 
-{ x: 4560, y: 2900 },
-{ x: 6008, y: 2900 },
-{ x: 6100, y: 2750 }, 
-{ x: 5750, y: 2516 }, 
-{ x: 5905, y: 2279 },
-{ x: 4677, y: 1470 }, 
-],
-
-SD2-S2-H002: [ 
-{ x: 4568, y: 3349 },
-{ x: 4568, y: 3315 },
-{ x: 4628, y: 3315 },
-{ x: 4628, y: 3246 },
-{ x: 4560, y: 3246 }, 
-{ x: 4560, y: 2900 },
-{ x: 6008, y: 2900 },
-{ x: 6100, y: 2750 }, 
-{ x: 5750, y: 2516 }, 
-{ x: 5905, y: 2279 },
-{ x: 4677, y: 1470 }, 
-],
-
-//salida mas cercana, salida 3 hasta el daract 2
-SD2-S3-I001: [ 
-{ x: 5003, y: 3201 },
-{ x: 5003, y: 3315 }, 
-{ x: 5430, y: 3315 }, 
-{ x: 5430, y: 2900 },
-{ x: 6008, y: 2900 },
-{ x: 6100, y: 2750 }, 
-{ x: 5750, y: 2516 }, 
-{ x: 5905, y: 2279 },
-{ x: 4677, y: 1470 }, 
-],
-
-SD2-S3-J001: [ 
-{ x: 5597, y: 3276 },
-{ x: 5597, y: 3315 }, 
-{ x: 5430, y: 3315 }, 
-{ x: 5430, y: 2900 },
-{ x: 6008, y: 2900 },
-{ x: 6100, y: 2750 }, 
-{ x: 5750, y: 2516 }, 
-{ x: 5905, y: 2279 },
-{ x: 4677, y: 1470 }, 
-],
-
-SD2-S3-J002: [ 
-{ x: 5692, y: 3276 }, 
-{ x: 5692, y: 3315 }, 
-{ x: 5430, y: 3315 }, 
-{ x: 5430, y: 2900 },
-{ x: 6008, y: 2900 },
-{ x: 6100, y: 2750 }, 
-{ x: 5750, y: 2516 }, 
-{ x: 5905, y: 2279 },
-{ x: 4677, y: 1470 }, 
-],
-
-SD2-S3-J003: [ 
-{ x: 5741, y: 3204 }, 
-{ x: 5692, y: 3315 }, 
-{ x: 5430, y: 3315 }, 
-{ x: 5430, y: 2900 },
-{ x: 6008, y: 2900 },
-{ x: 6100, y: 2750 }, 
-{ x: 5750, y: 2516 }, 
-{ x: 5905, y: 2279 },
-{ x: 4677, y: 1470 }, 
-],
-
-}*/
-
 let panX = 0;
 let panY = 0;
 let zoom = 1.0;
@@ -1090,6 +336,8 @@ function preload() {
   accesible = loadImage('img/servicios/accesible.png');
   ascensor = loadImage('img/servicios/ascensor.png');
   globo = loadImage('img/icons/globo.png');
+  encuentro = loadImage('img/icons/encuentro.png');
+  salida = loadImage('img/icons/salida.png');
 }
 
 function setup() {
@@ -1117,20 +365,19 @@ function setup() {
 }
 
 function draw() {
-  background(20);
+  background('#5070fe');
 
-  // --- MAPA, RECTÁNGULOS Y GPS ---
+  // --- MAPA, RUTA, GPS Y CARTELES (TODO BAJO LA MISMA CÁMARA) ---
   push();
   translate(panX, panY);
   scale(zoom);
-  rotate(anguloRotacion);
+  //rotate(anguloRotacion);
 
-  
   imageMode(CENTER);
   image(imgMapa, 0, 0);
 
   // 1. DIBUJAR RECTÁNGULOS DE EDIFICIOS BASADOS EN COORDENADAS
-  /*if (imgMapa.width > 0 && imgMapa.height > 0) {
+  if (imgMapa.width > 0 && imgMapa.height > 0) {
     for (let zona of ZONAS) {
       dibujarRectanguloGeo(
         zona.latNorte, 
@@ -1141,10 +388,9 @@ function draw() {
         zona.colorBorde
       );
     }
-  }*/
+  }
 
-
-///ACTUALIZACION NUEVA 7-11-2026 INICIO///
+    ///ACTUALIZACION NUEVA 7-11-2026 INICIO///
   const zonaActual = obtenerZonaActual();
 
   // TEMPORAL: para pruebas sin GPS, si miLatitud/miLongitud están en 0 se usa la zona simulada por teclado.
@@ -1212,73 +458,433 @@ function draw() {
   let circuloX = posGpsMapa.x - imgMapa.width / 2;
   let circuloY = posGpsMapa.y - imgMapa.height / 2;
 
-  // Halo exterior GPS
   noStroke();
   fill(80, 112, 254, 100);
   circle(circuloX, circuloY, 60 / zoom);
 
-  // Círculo central GPS
   stroke('#ffffff');
   strokeWeight(3 / zoom);
   fill('#5070fe');
   circle(circuloX, circuloY, 24 / zoom);
-
-  //000000000000000000000000000000000000000000000000000000000 CARTELES
   
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
   textFont('inter');
-  textSize(30);
   noStroke();
 
-  //DARACT 2
-  image(banios, 700, -880, 50, 50);
-  image(ascensor, 765, -1045, 50, 50);
+  function dibujarCartelIcono(fnDibujo, x, y, w, h) {
+    push();
+    translate(x, y);
+    //rotate(-anguloRotacion); 
+    fnDibujo();
+    pop();
+  }
 
-  fill('#004aac');
-  rect(840, -790, 130, 60, 7);
-  fill(255);
-  text(`Aula 1/3`, 840, -790);
+  function dibujarEdifiNom(fnDibujo, x, y, w, h) {
+    push();
+    translate(x, y);
+    //rotate(-anguloRotacion); 
+    scale(1 / zoom);         
+    fnDibujo();
+    pop();
+  }
 
-  fill('#004aac');
-  rect(1040, -660, 110, 60, 7);
-  fill(255);
-  text(`Aula 5`, 1040, -660);
+  // --- BAÑOS 1 --- 00000000000000000000000000000 DARACT II 0000000000000000000000000000000000
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 50, 50);
+  }, 700, -880);
 
-  fill('#004aac');
-  rect(900, -970, 110, 60, 7);
-  fill(255);
-  text(`Aula 2`, 900, -970);
+  // --- ASCENSOR ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(ascensor, 0, 0, 50, 50);
+  }, 765, -1045);
 
-  fill('#004aac');
-  rect(1000, -900, 110, 60, 7);
-  fill(255);
-  text(`Aula 4`, 1000, -900);
+  // --- AULA 1/3 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 120, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 1/3`, 0, 0);
+  }, 840, -790);
 
-  fill('#004aac');
-  rect(1090, -830, 110, 60, 7);
-  fill(255);
-  text(`Aula 6`, 1090, -830);
+  // --- AULA 5 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 5`, 0, 0);
+  }, 1040, -660);
 
-  fill('#004aac');
-  rect(1190, -760, 110, 60, 7);
-  fill(255);
-  text(`Aula 8`, 1190, -760);
+  // --- ENCUENTRO ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(encuentro, 0, 0, 50, 50);
+  }, 900, -290);
 
-  image(banios, 1300, -700, 50, 50);
-  image(accesible, 1235, -700, 30, 30);
+  // --- AULA 2 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 2`, 0, 0);
+  }, 900, -970);
 
-  fill('#004aac');
-  rect(1370, -510, 90, 60, 7);
-  fill(255);
-  text(`SUM`, 1370, -510);
+  // --- AULA 4 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 4`, 0, 0);
+  }, 1000, -900);
 
-  //DARACT 1
+  // --- AULA 6 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 6`, 0, 0);
+  }, 1090, -830);
 
-  pop();
+  // --- AULA 8 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 8`, 0, 0);
+  }, 1190, -760);
+
+  // --- BAÑOS 2 ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 50, 50);
+  }, 1300, -700);
+
+  // --- ACCESIBLE ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(accesible, 0, 0, 30, 30);
+  }, 1235, -700);
+
+  // --- SUM ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 90, 60, 7);
+    fill(255);
+    textSize(24);
+    text(`SUM`, 0, 0);
+  }, 1370, -510);
+
+  dibujarEdifiNom(() => {
+    fill('#004aac');
+    rect(0, 0, 130, 60, 7);
+    fill(255);
+    textSize(20);
+    text(`DARACT 2`, 0, 0);
+  }, 1200, -1000);
+
+  // --- J003 --- 0000000000000000000000000000 HISTORICO ALA ESTE 0000000000000000000000000000
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`J003`, 0, 2);
+  }, 1116, 170);
+
+  // --- I001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`I001`, 0, 2);
+  }, 355, 170);
+
+  // --- H001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`H001`, 0, 2);
+  }, -20, 170);
+
+  // --- SALIDA H ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -113, 301);
+
+  // --- G001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`G001`, 0, 2);
+  }, -395, 170);
+
+  // --- F001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`F001`, 0, 2);
+  }, -772, 170);
+
+  // --- F003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`F003`, 0, 2);
+  }, -667, 367);
+
+  // --- F004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`F004`, 0, 2);
+  }, -560, 367);
+
+  // --- G004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`G004`, 0, 2);
+  }, -291, 367);
+
+  // --- H004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`H004`, 0, 2);
+  }, -184, 367);
+
+  // --- COORDINACION DISENIO ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 90, 45, 7);
+    fill(255);
+    textLeading(8);
+    textSize(12);
+    text(`Coordinación\n\nde Diseño`, 0, 2);
+  }, 85, 367);
+
+  // --- AULA TALLER ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 65, 50, 7);
+    fill(255);
+    textLeading(9);
+    textSize(16);
+    text(`Aula\n\nTaller`, 0, 2);
+  }, 200, 367);
+
+  // --- BANIO PEQUENIO J ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 30, 30);
+  }, 824, 340);
+
+  // --- SALIDA J ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, 754, 303);
+
+  // --- J001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`J001`, 0, 2);
+  }, 920, 367);
+
+  // --- J002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`J002`, 0, 2);
+  }, 1020, 367);
+
+  // --- BANIOS J---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 50, 50);
+  }, 1145, 367);
+
+  // --- H002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`H002`, 0, 2);
+  }, -41, 494);
+
+  // --- H003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`H003`, 0, 2);
+  }, 65, 494);
+
+  // --- G003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`G003`, 0, 2);
+  }, -311, 494);
+
+  // --- G002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`G002`, 0, 2);
+  }, -420, 494);
+
+  // --- F002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`F002`, 0, 2);
+  }, -688, 494);
+
+  // --- AULA POSGRADO ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 95, 50, 7);
+    fill(255);
+    textLeading(8);
+    textSize(16);
+    text(`Aula\n\nPosgrado`, 0, 0);
+  }, -794, 494);
+
+  // --- ASCENSOR F ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(ascensor, 0, 0, 50, 50);
+  }, -875, 470);
+
+  // --- SALIDA F ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -860, 303);
+
+  // --- F004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 40, 7);
+    fill(255);
+    textLeading(9);
+    textSize(14);
+    text(`Depart.\n\nde Radio`, 0, 1);
+  }, -845, 383);
+
+  // --- VICERRECTORADO ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 130, 30, 7);
+    fill(255);
+    textSize(16);
+    text(`Vicerrectorado`, 0, 0);
+  }, -1155, 485);
+
+  // --- BEDELIA HIST ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 95, 40, 7);
+    fill(255);
+    textSize(20);
+    text(`Bedelía`, 0, 1);
+  }, -1279, 495);
+
+  // --- RECTORADO ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 30, 7);
+    fill(255);
+    textSize(16);
+    text(`Rectorado`, 0, 0);
+  }, -1765, 485);
+
+  // --- TITULOS ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 85, 40, 7);
+    fill(255);
+    textSize(20);
+    text(`Títulos`, 0, 0);
+  }, -1660, 487);
+
+  // --- CARPA ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Carpa`, 0, 2);
+  }, -1453, 210);
+
+  dibujarEdifiNom(() => {
+    fill('#004aac');
+    rect(0, 0, 130, 60, 7);
+    fill(255);
+    textSize(18);
+    textLeading(10);
+    text(`HISTÓRICO\n\nALA ESTE`, 0, 0);
+  }, 100, 0);
+  
+  // --- ENCUENTRO --- 00000000000000000000000000000000000000 DARACT 1 000000000000000000000000
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(encuentro, 0, 0, 50, 50);
+  }, -780, -1320);
+
+  dibujarEdifiNom(() => {
+    fill('#004aac');
+    rect(0, 0, 130, 60, 7);
+    fill(255);
+    textSize(20);
+    text(`DARACT 1`, 0, 0);
+  }, 100, -1700);
+
+  pop(); // Fin de la matriz principal del mapa
+
+  // --- APLICAR RESTRICCIONES DE MOVIMIENTO (BOUNDS) ---
+  aplicarRestriccionesMapa();
 
   // --- EVALUACIÓN DE ZONAS / EDIFICIOS ---
-  indiceColorActual = 0; // Por defecto fuera de zonas
+  indiceColorActual = 0; 
   for (let zona of ZONAS) {
     if (miLatitud <= zona.latNorte && miLatitud >= zona.latSur &&
         miLongitud >= zona.lonOeste && miLongitud <= zona.lonEste) {
@@ -1288,6 +894,7 @@ function draw() {
   }
 
   // --- BORDE MARCADOR DE PANTALLA ---
+  rectMode(CORNER);
   stroke(colorEdificio[indiceColorActual]);
   strokeWeight(10);
   noFill();
@@ -1301,7 +908,7 @@ function draw() {
 /**
  * Función para proyectar y dibujar un rectángulo basado en coordenadas GPS
  */
-/*
+
 function dibujarRectanguloGeo(latNorte, latSur, lonOeste, lonEste, colorRelleno, colorBorde) {
   // Convertir esquinas geograficas a pixeles de la imagen
   let xMin = map(lonOeste, MAPA_OESTE, MAPA_ESTE, 0, imgMapa.width, true);
@@ -1320,11 +927,32 @@ function dibujarRectanguloGeo(latNorte, latSur, lonOeste, lonEste, colorRelleno,
   stroke(colorBorde);
   strokeWeight(2 / zoom); // Mantiene el grosor del borde legible independiente del zoom
   rect(rectX, rectY, rectW, rectH);
-}*/
+}
+
+// Función para restringir que el mapa no salga completamente de la pantalla
+function aplicarRestriccionesMapa() {
+  if (imgMapa.width > 0 && imgMapa.height > 0) {
+    // Calculamos el tamaño escalado del mapa en pantalla
+    let mapaAnchoEscalado = imgMapa.width * zoom;
+    let mapaAltoEscalado = imgMapa.height * zoom;
+
+    // Margen de tolerancia para que al menos una parte del mapa quede visible
+    let margenX = width * 0.75;
+    let margenY = height * 0.75;
+
+    let minX = -mapaAnchoEscalado / 2 - margenX;
+    let maxX = width + mapaAnchoEscalado / 2 + margenX;
+    let minY = -mapaAltoEscalado / 2 - margenY;
+    let maxY = height + mapaAltoEscalado / 2 + margenY;
+
+    panX = constrain(panX, minX, maxX);
+    panY = constrain(panY, minY, maxY);
+  }
+}
 
 // TEMPORAL: para probar la zona sin GPS y sin ubicar el teléfono, se usa el teclado.
 // Presionar: 1 = HISTORICO ALA ESTE, 2 = DARACT 1, 3 = DARACT 2.
-function keyPressed() {
+/*function keyPressed() {
   if (miLatitud !== 0 || miLongitud !== 0) return;
 
   if (key === '1') {
@@ -1334,7 +962,7 @@ function keyPressed() {
   } else if (key === '3') {
     zonaSimulada = 'DARACT 2';
   }
-}
+}*/
 // TEMPORAL: fin de prueba por teclado.
 
 function actualizarPosicion(position) {
@@ -1349,17 +977,32 @@ function actualizarPosicion(position) {
 
 function touchMoved() {
   if (touches.length === 1) {
+    // Un dedo: Arrastrar el mapa libremente (Pan)
     panX += movedX;
     panY += movedY;
   } else if (touches.length === 2) {
+    // Dos dedos: Zoom (Pinch) y Rotación con pivote en el centro de la pantalla
     let distActual = dist(touches[0].x, touches[0].y, touches[1].x, touches[1].y);
+    
     if (distToqueInicial > 0) {
       let factor = distActual / distToqueInicial;
-      zoom = constrain(zoomInicial * factor, 0.2, 5.0);
+      let nuevoZoom = constrain(zoomInicial * factor, 0.2, 5.0);
+
+      // El zoom se mantiene fluido haciendo zoom hacia el centro de la pantalla
+      let centroX = width / 2;
+      let centroY = height / 2;
+      
+      panX = centroX - (centroX - panX) * (nuevoZoom / zoom);
+      panY = centroY - (centroY - panY) * (nuevoZoom / zoom);
+      zoom = nuevoZoom;
     }
 
+    // Calcular el nuevo ángulo y aplicar la rotación tomando el centro de la pantalla como eje
     let anguloActual = atan2(touches[1].y - touches[0].y, touches[1].x - touches[0].x);
-    anguloRotacion = rotacionInicial + (anguloActual - anguloInicialToque);
+    let deltaAngulo = anguloActual - anguloInicialToque;
+    
+    // Aplicamos el cambio de rotación
+    anguloRotacion = rotacionInicial + deltaAngulo;
   }
   return false;
 }
@@ -1394,14 +1037,18 @@ function mouseDragged() {
 
 function mouseWheel(event) {
   let factorZoom = event.delta > 0 ? 0.9 : 1.1;
-  zoom = constrain(zoom * factorZoom, 0.2, 5.0);
+  let nuevoZoom = constrain(zoom * factorZoom, 0.2, 5.0);
+  
+  panX = mouseX - (mouseX - panX) * (nuevoZoom / zoom);
+  panY = mouseY - (mouseY - panY) * (nuevoZoom / zoom);
+  zoom = nuevoZoom;
   return false;
 }
 
 function dibujarInterfaz() {
   noStroke();
-  fill(0, 200);
-  rect(10, 10, 240, 90, 8);
+  fill('rgba(0, 75, 172, 0.75)');
+  rect(10, 10, 140, 90, 8);
 
   fill(255);
   textSize(12);
