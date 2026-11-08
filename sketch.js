@@ -6,7 +6,7 @@ let accesible;
 let ascensor;
 let globo;
 let biblioteca;
-let zonaSimulada;
+//let zonaSimulada;
 
 const parametrosUbicacion = new URLSearchParams(window.location.search);
 let ubicacion_objetivo = parametrosUbicacion.get('ubicacion_objetivo');
@@ -55,7 +55,7 @@ let miLongitud = 0;
 
 // TEMPORAL: para probar rutas sin GPS, permitir simular la zona actual con teclado.
 // Borrar esta sección cuando ya no haga falta la prueba manual.
-/*let zonaSimulada = null;
+let zonaSimulada = null;
 
 function simularZonaConTeclado() {
   if (miLatitud !== 0 || miLongitud !== 0) return;
@@ -67,7 +67,7 @@ function simularZonaConTeclado() {
   } else if (key === '3') {
     zonaSimulada = 'DARACT 2';
   }
-}*/
+}
 
 let posGpsMapa = { x: 0, y: 0 };
 
@@ -1119,7 +1119,7 @@ function aplicarRestriccionesMapa() {
 
 // TEMPORAL: para probar la zona sin GPS y sin ubicar el teléfono, se usa el teclado.
 // Presionar: 1 = HISTORICO ALA ESTE, 2 = DARACT 1, 3 = DARACT 2.
-/*function keyPressed() {
+function keyPressed() {
   if (miLatitud !== 0 || miLongitud !== 0) return;
 
   if (key === '1') {
@@ -1129,7 +1129,7 @@ function aplicarRestriccionesMapa() {
   } else if (key === '3') {
     zonaSimulada = 'DARACT 2';
   }
-}*/
+}
 // TEMPORAL: fin de prueba por teclado.
 
 function actualizarPosicion(position) {

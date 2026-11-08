@@ -151,34 +151,53 @@
 
         const carousel = document.getElementById('destinosCarousel');
         let startX = 0;
+        let currentX = 0;
         let dragging = false;
 
-        carousel.addEventListener('pointerdown', (event) => {
-            dragging = true;
-            startX = event.clientX;
-            carousel.classList.add('dragging');
-        });
-
-        carousel.addEventListener('pointerup', (event) => {
-            if (!dragging) return;
+        const resetDrag = () => {
             dragging = false;
             carousel.classList.remove('dragging');
+        };
 
-            const deltaX = event.clientX - startX;
-            if (Math.abs(deltaX) > 50) {
-                const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carousel);
-                if (deltaX < 0) {
-                    bsCarousel.next();
-                } else {
-                    bsCarousel.prev();
-                }
+        const finishDrag = (event) => {
+            if (!dragging) return;
+
+            const deltaX = currentX - startX;
+            resetDrag();
+
+            if (carousel.hasPointerCapture && carousel.hasPointerCapture(event.pointerId)) {
+                carousel.releasePointerCapture(event.pointerId);
+            }
+
+            if (Math.abs(deltaX) <= 50) return;
+
+            const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carousel);
+            if (deltaX < 0) {
+                bsCarousel.next();
+            } else {
+                bsCarousel.prev();
+            }
+        };
+
+        carousel.addEventListener('pointerdown', (event) => {
+            event.preventDefault();
+            dragging = true;
+            startX = event.clientX;
+            currentX = event.clientX;
+            carousel.classList.add('dragging');
+
+            if (carousel.setPointerCapture) {
+                carousel.setPointerCapture(event.pointerId);
             }
         });
 
-        carousel.addEventListener('pointerleave', () => {
-            dragging = false;
-            carousel.classList.remove('dragging');
+        carousel.addEventListener('pointermove', (event) => {
+            if (!dragging) return;
+            currentX = event.clientX;
         });
+
+        carousel.addEventListener('pointerup', finishDrag);
+        carousel.addEventListener('pointercancel', () => resetDrag());
     </script>
 
     <!-- Bootstrap JS Bundle con Popper (necesario para menús desplegables, modales, etc.) -->

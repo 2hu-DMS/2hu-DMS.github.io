@@ -14,7 +14,7 @@
 </head>
 <body class="page-edificios">
     <nav class="navbar fixed-bottom py-2">
-        <div class="container-fluid justify-content-center gap-3">
+        <div class="container-fluid justify-content-center gap-5">
             <a href="inicio.html" class="nav-icon-button" data-page="inicio" aria-label="Inicio">
                 <img src="img/icons/casa.png" alt="" aria-hidden="true">
             </a>
@@ -28,32 +28,27 @@
         <h1 class="titulo-aulas-edificios">Edificios</h1>
 
         <div class="d-grid gap-3 mt-4 building-list">
-            <button type="button" class="building-button">Edificio histórico</button>
-            <button type="button" class="building-button" id="daract1-button">Daract 1</button>
-            <button type="button" class="building-button" id="daract2-button">Daract 2</button>
-            <button type="button" class="building-button">Edificio de laboratorios</button>
-            <button type="button" class="building-button">Dorrego 1</button>
-            <button type="button" class="building-button">Edificio de mantenimiento</button>
+            <button type="button" class="building-button" data-target="historico">Edificio histórico</button>
+            <button type="button" class="building-button" data-target="daract1">Daract 1</button>
+            <button type="button" class="building-button" data-target="daract2">Daract 2</button>
         </div>
     </main>
 
     <script>
-        document.getElementById('historico-button').addEventListener('click', () => {
-            setTimeout(() => {
-                window.location.href = 'map.html?ubicacion_objetivo=historico';
-            }, 180);
-        });
+        document.querySelectorAll('.building-button').forEach((button) => {
+            const target = button.dataset.target;
 
-        document.getElementById('daract1-button').addEventListener('click', () => {
-            setTimeout(() => {
-                window.location.href = 'map.html?ubicacion_objetivo=daract1';
-            }, 180);
-        });
+            if (!target) return;
 
-        document.getElementById('daract2-button').addEventListener('click', () => {
-            setTimeout(() => {
-                window.location.href = 'map.html?ubicacion_objetivo=daract2';
-            }, 180);
+            button.addEventListener('click', () => {
+                const params = new URLSearchParams({
+                    ubicacion_objetivo: target
+                });
+
+                setTimeout(() => {
+                    window.location.href = `map.html?${params.toString()}`;
+                }, 180);
+            });
         });
 
         const currentPage = window.location.pathname.split('/').pop() || 'inicio.html';

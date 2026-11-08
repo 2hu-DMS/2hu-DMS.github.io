@@ -183,7 +183,9 @@
     object-fit: contain;
 }
 
-card .page-inicio #destinosCarousel {
+.page-inicio #destinosCarousel {
+    position: relative;
+    overflow: hidden;
     touch-action: pan-y;
     user-select: none;
     cursor: grab;
@@ -191,6 +193,10 @@ card .page-inicio #destinosCarousel {
 
 .page-inicio #destinosCarousel.dragging {
     cursor: grabbing;
+}
+
+.page-inicio #destinosCarousel .carousel-inner {
+    overflow: hidden;
 }
 
 /*0000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
