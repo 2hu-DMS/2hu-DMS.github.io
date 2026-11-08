@@ -1088,7 +1088,7 @@ function draw() {
 
   // --- INTERFAZ ---
   dibujarInterfaz();
-  //dibujarPuntoClick();
+  dibujarPuntoClick(); //<---------------------------------------ESTA DIBUJA EL CARTEL CON LOS PIXELES
 }
 
 /**
@@ -1246,7 +1246,7 @@ function dibujarInterfaz() {
 }
 
 // TEMPORAL: muestra las coordenadas del ultimo clic, separadas del panel GPS.
-/*function dibujarPuntoClick() {
+function dibujarPuntoClick() {
   if (!puntoClickMapa) return;
 
   const ancho = 230;
@@ -1269,7 +1269,7 @@ function dibujarInterfaz() {
     x + 12,
     y + 32
   );
-}*/
+}
 
 function errorGPS(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
