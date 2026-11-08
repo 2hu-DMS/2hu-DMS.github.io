@@ -831,6 +831,16 @@ function draw() {
     text(`Bedelía`, 0, 1);
   }, -1279, 495);
 
+  // --- CONSEJO SUPERIOR ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 95, 55, 7);
+    fill(255);
+    textLeading(10);
+    textSize(16);
+    text(`Consejo\n\nSuperior`, 0, 0);
+  }, -1380, 520);
+
   // --- RECTORADO ---
   dibujarCartelIcono(() => {
     fill('#004aac');
@@ -857,6 +867,15 @@ function draw() {
     textSize(24);
     text(`Carpa`, 0, 2);
   }, -1453, 210);
+
+  // --- EDITORA ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 95, 40, 7);
+    fill(255);
+    textSize(20);
+    text(`Editora`, 0, 1);
+  }, -1794, 280);
 
   dibujarEdifiNom(() => {
     fill('#004aac');
