@@ -5,6 +5,8 @@ let banios;
 let accesible;
 let ascensor;
 let globo;
+let biblioteca;
+let zonaSimulada;
 
 const parametrosUbicacion = new URLSearchParams(window.location.search);
 let ubicacion_objetivo = parametrosUbicacion.get('ubicacion_objetivo');
@@ -24,8 +26,8 @@ const MAPA_ESTE  = -58.772530;
 const ZONAS = [
   {
     nombre: "HISTORICO ALA ESTE",
-    latNorte: -34.651320, latSur: -34.651930,
-    lonOeste: -58.775925, lonEste: -58.774335,
+    latNorte: -34.651020, latSur: -34.651930,
+    lonOeste: -58.785925, lonEste: -58.774900,
     colorRelleno: 'rgba(0, 74, 172, 0.35)',
     colorBorde: '#004aac',
     indiceColor: 1
@@ -338,6 +340,7 @@ function preload() {
   globo = loadImage('img/icons/globo.png');
   encuentro = loadImage('img/icons/encuentro.png');
   salida = loadImage('img/icons/salida.png');
+  biblioteca = loadImage('img/servicios/biblioteca.png');
 }
 
 function setup() {
@@ -377,7 +380,7 @@ function draw() {
   image(imgMapa, 0, 0);
 
   // 1. DIBUJAR RECTÁNGULOS DE EDIFICIOS BASADOS EN COORDENADAS
-  if (imgMapa.width > 0 && imgMapa.height > 0) {
+  /*if (imgMapa.width > 0 && imgMapa.height > 0) {
     for (let zona of ZONAS) {
       dibujarRectanguloGeo(
         zona.latNorte, 
@@ -388,7 +391,7 @@ function draw() {
         zona.colorBorde
       );
     }
-  }
+  }*/
 
     ///ACTUALIZACION NUEVA 7-11-2026 INICIO///
   const zonaActual = obtenerZonaActual();
@@ -416,7 +419,7 @@ function draw() {
   if (ubicacion_objetivo && rutasZona.rutas[ubicacion_objetivo]) {
     const ruta = rutasZona.rutas[ubicacion_objetivo];
     noFill();
-    stroke('#014BAC');
+    stroke('#004acc');
     strokeWeight(6 / zoom);
     beginShape();
     for (const punto of ruta) {
@@ -428,7 +431,7 @@ function draw() {
   if (ubicacion_objetivo_aulas !== null && rutasZona.aulas[ubicacion_objetivo_aulas]) {
     const ruta = rutasZona.aulas[ubicacion_objetivo_aulas];
     noFill();
-    stroke('#014BAC');
+    stroke('#004acc');
     strokeWeight(6 / zoom);
     beginShape();
     for (const punto of ruta) {
@@ -864,11 +867,165 @@ function draw() {
     text(`HISTÓRICO\n\nALA ESTE`, 0, 0);
   }, 100, 0);
   
+  // --- SALIDA A --- 0000000000000000000000000000 HISTORICO ALA OESTE 0000000000000000000000000000
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -2045, 303);
+
+  // --- SALIDA B ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -2443, 275);
+
+  // --- SALIDA C ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -2796, 303);
+
+  // --- SALIDA D ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -3170, 303);
+
+  // --- SALIDA E NORTE ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -3725, 303);
+
+   // --- SALIDA E SUR ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(salida, 0, 0, 30, 30);
+  }, -3727, 568);
+
+  dibujarEdifiNom(() => {
+    fill('#004aac');
+    rect(0, 0, 130, 60, 7);
+    fill(255);
+    textSize(18);
+    textLeading(10);
+    text(`HISTÓRICO\n\nALA OESTE`, 0, 0);
+  }, -3000, 0);
+
   // --- ENCUENTRO --- 00000000000000000000000000000000000000 DARACT 1 000000000000000000000000
   dibujarCartelIcono(() => {
     imageMode(CENTER);
     image(encuentro, 0, 0, 50, 50);
   }, -780, -1320);
+
+  // --- ASCENSOR ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(ascensor, 0, 0, 50, 50);
+  }, 335, -1305);
+
+  // --- BEDELIA DARACT I ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 95, 40, 7);
+    fill(255);
+    textSize(20);
+    text(`Bedelía`, 0, 1);
+  }, 290, -1140);
+
+  // --- BAÑOS 1 ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 50, 50);
+  }, 200, -1182);
+
+  // --- ACCESIBLE 1 ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(accesible, 0, 0, 30, 30);
+  }, 243, -1188);
+
+  // --- AULA 2 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 2`, 0, 0);
+  }, 225, -1395);
+
+  // --- AULA 4 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 4`, 0, 0);
+  }, 120, -1455);
+
+  // --- AULA 6 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 6`, 0, 0);
+  }, 25, -1520);
+
+  // --- AULA 8 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 8`, 0, 0);
+  }, -80, -1582);
+
+   // --- BAÑOS 2 ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 50, 50);
+  }, -180, -1655);
+
+  // --- ACCESIBLE 2 ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(accesible, 0, 0, 30, 30);
+  }, -159, -1594);
+
+  // --- BIBLIOTECA RUIDOSA---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(biblioteca, 0, 0, 50, 50);
+  }, -390, -1685);
+
+  // --- BIBLIOTECA RUIDOSA ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 90, 50, 7);
+    fill(255);
+    textLeading(10);
+    textSize(16);
+    text(`Biblioteca\n\nRuidosa`, 0, 2);
+  }, -390, -1630);
+
+  // --- AULA 1/3 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 120, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 1/3`, 0, 0);
+  }, 70, -1280);
+
+  // --- AULA 5/7 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 120, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`Aula 5/7`, 0, 0);
+  }, -120, -1400);
 
   dibujarEdifiNom(() => {
     fill('#004aac');
@@ -877,6 +1034,16 @@ function draw() {
     textSize(20);
     text(`DARACT 1`, 0, 0);
   }, 100, -1700);
+
+  // --- ENCUENTRO --- 00000000000000000000000000000000000000 DORREGO 1 000000000000000000000000
+
+  dibujarEdifiNom(() => {
+    fill('#004aac');
+    rect(0, 0, 140, 60, 7);
+    fill(255);
+    textSize(20);
+    text(`DORREGO 1`, 0, 0);
+  }, -3223, -1900);
 
   pop(); // Fin de la matriz principal del mapa
 
@@ -902,13 +1069,13 @@ function draw() {
 
   // --- INTERFAZ ---
   dibujarInterfaz();
-  dibujarPuntoClick();
+  //dibujarPuntoClick();
 }
 
 /**
  * Función para proyectar y dibujar un rectángulo basado en coordenadas GPS
  */
-
+/*
 function dibujarRectanguloGeo(latNorte, latSur, lonOeste, lonEste, colorRelleno, colorBorde) {
   // Convertir esquinas geograficas a pixeles de la imagen
   let xMin = map(lonOeste, MAPA_OESTE, MAPA_ESTE, 0, imgMapa.width, true);
@@ -927,7 +1094,7 @@ function dibujarRectanguloGeo(latNorte, latSur, lonOeste, lonEste, colorRelleno,
   stroke(colorBorde);
   strokeWeight(2 / zoom); // Mantiene el grosor del borde legible independiente del zoom
   rect(rectX, rectY, rectW, rectH);
-}
+}*/
 
 // Función para restringir que el mapa no salga completamente de la pantalla
 function aplicarRestriccionesMapa() {
@@ -1060,7 +1227,7 @@ function dibujarInterfaz() {
 }
 
 // TEMPORAL: muestra las coordenadas del ultimo clic, separadas del panel GPS.
-function dibujarPuntoClick() {
+/*function dibujarPuntoClick() {
   if (!puntoClickMapa) return;
 
   const ancho = 230;
@@ -1083,7 +1250,7 @@ function dibujarPuntoClick() {
     x + 12,
     y + 32
   );
-}
+}*/
 
 function errorGPS(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
