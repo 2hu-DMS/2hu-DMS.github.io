@@ -199,10 +199,61 @@
     overflow: hidden;
 }
 
+.page-inicio #destinosCarousel .carousel-control-prev,
+.page-inicio #destinosCarousel .carousel-control-next {
+    top: 50%;
+    bottom: auto;
+    width: 44px;
+    height: 44px;
+    opacity: 1;
+    transform: translateY(-50%);
+}
+
+.page-inicio #destinosCarousel .carousel-control-prev-icon,
+.page-inicio #destinosCarousel .carousel-control-next-icon {
+    width: 14px;
+    height: 14px;
+    background-image: none;
+}
+
+.page-inicio #destinosCarousel .carousel-control-prev-icon {
+    border-left: 3px solid #004aac;
+    border-bottom: 3px solid #004aac;
+    transform: rotate(45deg);
+}
+
+.page-inicio #destinosCarousel .carousel-control-next-icon {
+    border-right: 3px solid #004aac;
+    border-bottom: 3px solid #004aac;
+    transform: rotate(-45deg);
+}
+
+.page-inicio #destinosCarousel .carousel-control-prev {
+    left: calc(50% - 31% - 3rem);
+}
+
+.page-inicio #destinosCarousel .carousel-control-next {
+    right: calc(50% - 31% - 3rem);
+}
+
 /*0000000000000000000000000000000000000000000000000000000000000000000000000000000000000*/
 .page-inicio .destino-card {
     border: 0px;
     background: rgba(236, 8, 8, 0);
+}
+
+.page-inicio .destination-route-button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    line-height: 0;
+    cursor: pointer;
+}
+
+.page-inicio .destination-route-button:focus-visible {
+    outline: 3px solid #004aac;
+    outline-offset: 4px;
+    border-radius: 0.7rem;
 }
 
 @media (max-width: 440px) {
@@ -242,6 +293,28 @@
     .page-inicio .dibujo-carta {
         border-radius: 1rem;
         width: 20%;
+    }
+
+    .page-inicio #destinosCarousel .carousel-control-prev {
+        left: calc(50% - 10% - 3rem);
+    }
+
+    .page-inicio #destinosCarousel .carousel-control-next {
+        right: calc(50% - 10% - 3rem);
+    }
+}
+
+@media (min-width: 768px) {
+    .page-inicio .dibujo-carta {
+        width: 55%;
+    }
+
+    .page-inicio #destinosCarousel .carousel-control-prev {
+        left: calc(50% - 27.5% - 3rem);
+    }
+
+    .page-inicio #destinosCarousel .carousel-control-next {
+        right: calc(50% - 27.5% - 3rem);
     }
 }
 

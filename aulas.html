@@ -61,8 +61,6 @@
                         <button type="button" class="room-button" data-room="Aula5y7" data-route="d1aula5y7">Aula 5-7</button>
                         <button type="button" class="room-button" data-room="Aula6" data-route="d1aula6">Aula 6</button>
                         <button type="button" class="room-button" data-room="Aula8" data-route="d1aula8">Aula 8</button>
-                        <button type="button" class="room-button" data-room="Banos" data-route="d1banos">Baños</button>
-                        <button type="button" class="room-button" data-room="Biblioteca" data-route="d1biblioteca">Biblioteca</button>
                     </div>
                 </div>
             </div>
@@ -78,7 +76,6 @@
                         <button type="button" class="room-button" data-room="aula5" data-route="d2aula5">Aula 5</button>
                         <button type="button" class="room-button" data-room="aula6" data-route="d2aula6">Aula 6</button>
                         <button type="button" class="room-button" data-room="aula8" data-route="d2aula8">Aula 8</button>
-                        <button type="button" class="room-button" data-room="banos" data-route="d2banos">Baños</button>
                         <button type="button" class="room-button" data-room="sum" data-route="d2sum">SUM</button>
                     </div>
                 </div>
@@ -143,8 +140,8 @@
                 const isDaractI = grid.closest('.building-options').id === 'options-daract-1';
                 const isDaractII = grid.closest('.building-options').id === 'options-daract-2';
                 const routeRooms = isDaractI
-                    ? ['Aula1y3', 'Aula2', 'Aula4', 'Aula5y7', 'Aula6', 'Aula8', 'Banos', 'Biblioteca']
-                    : ['aula1y3', 'aula2', 'aula4', 'aula5', 'aula6', 'aula8', 'banos'];
+                    ? ['Aula1y3', 'Aula2', 'Aula4', 'Aula5y7', 'Aula6', 'Aula8']
+                    : ['aula1y3', 'aula2', 'aula4', 'aula5', 'aula6', 'aula8'];
                 routeRooms.forEach((room) => {
                     localStorage.setItem(room, String(selectedRoom === room));
                 });

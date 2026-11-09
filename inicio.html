@@ -66,50 +66,85 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="destino-card border-0 shadow-sm overflow-hidden justify-content-center">
-                        <img src="img/carousel/dptoalumnos.png" class="dibujo-carta" alt="Destino destacado 1">
+                        <button type="button" class="destination-route-button" data-route="dptoalumnos"
+                            aria-label="Mostrar ruta al Departamento de alumnos">
+                            <img src="img/carousel/dptoalumnos.png" class="dibujo-carta" alt="">
+                        </button>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="destino-card border-0 shadow-sm overflow-hidden justify-content-center">
-                        <img src="img/carousel/banios.png" class="dibujo-carta" alt="Destino destacado 2">
+                        <button type="button" class="destination-route-button" data-route="banos"
+                            aria-label="Mostrar ruta a los baños">
+                            <img src="img/carousel/banios.png" class="dibujo-carta" alt="">
+                        </button>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="destino-card border-0 shadow-sm overflow-hidden justify-content-center">
-                        <img src="img/carousel/buffetnuevo.png" class="dibujo-carta" alt="Destino destacado 3">
+                        <button type="button" class="destination-route-button" data-route="buffetnuevo"
+                            aria-label="Mostrar ruta al Buffet nuevo">
+                            <img src="img/carousel/buffetnuevo.png" class="dibujo-carta" alt="">
+                        </button>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="destino-card border-0 shadow-sm overflow-hidden justify-content-center">
-                        <img src="img/carousel/buffetviejo.png" class="dibujo-carta" alt="Destino destacado 4">
+                        <button type="button" class="destination-route-button" data-route="buffetviejo"
+                            aria-label="Mostrar ruta al Buffet viejo">
+                            <img src="img/carousel/buffetviejo.png" class="dibujo-carta" alt="">
+                        </button>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="destino-card border-0 shadow-sm overflow-hidden justify-content-center">
-                        <img src="img/carousel/fotocopia.png" class="dibujo-carta" alt="Destino destacado 5">
+                        <button type="button" class="destination-route-button" data-route="fotocopiadora"
+                            aria-label="Mostrar ruta a la Fotocopiadora">
+                            <img src="img/carousel/fotocopia.png" class="dibujo-carta" alt="">
+                        </button>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="destino-card border-0 shadow-sm overflow-hidden justify-content-center">
-                        <img src="img/carousel/bienestar.png" class="dibujo-carta" alt="Destino destacado 6">
+                        <button type="button" class="destination-route-button" data-route="bienestar"
+                            aria-label="Mostrar ruta a Bienestar">
+                            <img src="img/carousel/bienestar.png" class="dibujo-carta" alt="">
+                        </button>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="destino-card border-0 shadow-sm overflow-hidden justify-content-center">
-                        <img src="img/carousel/biblioruido.png" class="dibujo-carta" alt="Destino destacado 7">
+                        <button type="button" class="destination-route-button" data-route="d1biblioteca"
+                            data-zone="daract1" aria-label="Mostrar ruta a la Biblioteca ruidosa del Daract 1">
+                            <img src="img/carousel/biblioruido.png" class="dibujo-carta" alt="">
+                        </button>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="destino-card border-0 shadow-sm overflow-hidden justify-content-center">
-                        <img src="img/carousel/bibliosilencio.png" class="dibujo-carta" alt="Destino destacado 8">
+                        <button type="button" class="destination-route-button" data-route="bibliotecasilenciosa"
+                            aria-label="Mostrar ruta a la Biblioteca silenciosa">
+                            <img src="img/carousel/bibliosilencio.png" class="dibujo-carta" alt="">
+                        </button>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="destino-card border-0 shadow-sm overflow-hidden justify-content-center">
-                        <img src="img/carousel/enfermeria.png" class="dibujo-carta" alt="Destino destacado 9">
+                        <button type="button" class="destination-route-button" data-route="enfermeria"
+                            aria-label="Mostrar ruta a Enfermería">
+                            <img src="img/carousel/enfermeria.png" class="dibujo-carta" alt="">
+                        </button>
                     </div>
                 </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#destinosCarousel"
+                data-bs-slide="prev" aria-label="Destino anterior">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#destinosCarousel"
+                data-bs-slide="next" aria-label="Destino siguiente">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
         </div>
     </main>
 
@@ -132,6 +167,13 @@
             }, 180);
         });
 
+        const emergencyButton = document.querySelector('.home-action-button[aria-label="Emergencia"]');
+        emergencyButton.addEventListener('click', () => {
+            setTimeout(() => {
+                window.location.href = 'map.html?ubicacion_objetivo=emergencia';
+            }, 180);
+        });
+
         const currentPage = window.location.pathname.split('/').pop() || 'inicio.html';
         const navButtons = document.querySelectorAll('.navbar .nav-icon-button');
 
@@ -150,6 +192,22 @@
         });
 
         const carousel = document.getElementById('destinosCarousel');
+        document.querySelectorAll('.destination-route-button').forEach((button) => {
+            button.addEventListener('click', () => {
+                const params = new URLSearchParams();
+                if (button.dataset.route === 'banos') {
+                    params.set('ubicacion_objetivo', 'banos');
+                } else {
+                    params.set('ubicacion_objetivo', button.dataset.zone || 'historico');
+                    params.set('ubicacion_objetivo_aulas', button.dataset.route);
+                }
+
+                setTimeout(() => {
+                    window.location.href = `map.html?${params.toString()}`;
+                }, 180);
+            });
+        });
+
         let startX = 0;
         let currentX = 0;
         let dragging = false;
@@ -180,6 +238,8 @@
         };
 
         carousel.addEventListener('pointerdown', (event) => {
+            if (event.target.closest('.carousel-control-prev, .carousel-control-next, .destination-route-button')) return;
+
             event.preventDefault();
             dragging = true;
             startX = event.clientX;

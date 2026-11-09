@@ -111,7 +111,19 @@ const RUTASHIS = {
     { x: 5059, y: 2063 },
     { x: 5221, y: 1834 },
     { x: 5325, y: 1902 },
-    ]
+    ],
+
+  emergencia: [
+    { x: 3535, y: 3317 },
+    { x: 3875, y: 3317 },
+    { x: 3875, y: 3242 },
+    { x: 3810, y: 3242 }, 
+    { x: 3810, y: 2900 }, 
+    { x: 3600, y: 2900 }, 
+    { x: 3600, y: 2190 }, 
+    { x: 3865, y: 2129 }, 
+    { x: 3865, y: 1600 }, 
+    ],
 };
 
 /// RUTAS DE AULAS GENERALES ///
@@ -264,7 +276,53 @@ const RUTASAULAS = {
     { x: 3535, y: 3317 },
     { x: 3880, y: 3315 },
     { x: 3880, y: 3205 },
-    ]
+    ],
+  dptoalumnos: [
+    { x: 3535, y: 3317 },
+    { x: 2128, y: 3317 }, 
+    { x: 2128, y: 3154 }, 
+    ], 
+  buffetnuevo: [
+    { x: 3535, y: 3317 },
+    { x: 2128, y: 3317 }, 
+    { x: 2128, y: 3203 }, 
+    { x: 2318, y: 3203 }, 
+    { x: 2318, y: 2933 }, 
+    { x: 2244, y: 2933 }, 
+    ],
+  fotocopiadora: [
+    { x: 3535, y: 3317 },
+    { x: 2128, y: 3317 },
+    { x: 2128, y: 3203 },
+    { x: 2318, y: 3203 },
+    { x: 2318, y: 2784 },
+    ],
+  buffetviejo: [
+    { x: 3535, y: 3317 },
+    { x: 3523, y: 2728 }, 
+    ],
+  bibliotecasilenciosa: [
+    { x: 3535, y: 3317 },
+    { x: 1751, y: 3317 }, 
+    { x: 1751, y: 3202 }, 
+    ],
+  bienestar: [
+    { x: 3535, y: 3317 },
+    { x: 955, y: 3317 }, 
+    { x: 955, y: 3385 }, 
+    { x: 917, y: 3385 }, 
+    ],
+  enfermeria: [
+    { x: 3535, y: 3317 },
+    { x: 785, y: 3317 }, 
+    { x: 785, y: 3281 }, 
+    ],
+  hisbanos: [
+    { x: 3535, y: 3317 },
+    { x: 2130, y: 3323 }, 
+    { x: 2130, y: 3251 },
+    { x: 2170, y: 3254 },
+    ],
 };
 
 
@@ -290,7 +348,16 @@ const RUTASD1 = {
   daract2: [
     { x: 5003, y: 1682 },
     { x: 5325, y: 1902 },
-    ]
+    ],
+  
+  emergencia: [
+    { x: 5003, y: 1682 },
+    { x: 5117, y: 1765 },
+    { x: 4953, y: 2002 },
+    { x: 4628, y: 1789 }, 
+    { x: 4194, y: 1711 }, 
+    { x: 3865, y: 1600 }, 
+    ],
 };
 
 /// RUTAS DESDE EL DARACT 2///
@@ -315,7 +382,16 @@ const RUTASD2 = {
   
   daract2: [
     { x: 5325, y: 1902 },
-    ]
+    ],
+  
+  emergencia: [
+    { x: 5325, y: 1902 },
+    { x: 5221, y: 1834 },
+    { x: 5059, y: 2063 },
+    { x: 5891, y: 2611 }, 
+    { x: 5544, y: 2733 }, 
+    { x: 5544, y: 2633 }, 
+    ],
 };
 ///ACTUALIZACION NUEVA 7-11-2026 FIN///
 
@@ -415,9 +491,30 @@ function draw() {
   };
 
   const rutasZona = RUTAS_POR_ZONA[zonaActiva] || { rutas: {}, aulas: {} };
+  const rutasBanosPorZona = {
+    'HISTORICO ALA ESTE': { rutaEdificio: 'historico', rutaDestino: 'hisbanos' },
+    'DARACT 1': { rutaEdificio: 'daract1', rutaDestino: 'd1banos' },
+    'DARACT 2': { rutaEdificio: 'daract2', rutaDestino: 'd2banos' }
+  };
+  const objetivosZona = ubicacion_objetivo === 'banos'
+    ? rutasBanosPorZona[zonaActiva]
+    : { rutaEdificio: ubicacion_objetivo, rutaDestino: ubicacion_objetivo_aulas };
+  const colorRuta = ubicacion_objetivo === 'emergencia' ? '#ff3131' : '#004acc';
 
-  if (ubicacion_objetivo && rutasZona.rutas[ubicacion_objetivo]) {
-    const ruta = rutasZona.rutas[ubicacion_objetivo];
+  if (objetivosZona?.rutaEdificio && rutasZona.rutas[objetivosZona.rutaEdificio]) {
+    const ruta = rutasZona.rutas[objetivosZona.rutaEdificio];
+    noFill();
+    stroke(colorRuta);
+    strokeWeight(6 / zoom);
+    beginShape();
+    for (const punto of ruta) {
+      vertex(punto.x - imgMapa.width / 2, punto.y - imgMapa.height / 2);
+    }
+    endShape();
+  }
+
+  if (objetivosZona?.rutaDestino && rutasZona.aulas[objetivosZona.rutaDestino]) {
+    const ruta = rutasZona.aulas[objetivosZona.rutaDestino];
     noFill();
     stroke('#004acc');
     strokeWeight(6 / zoom);
@@ -428,22 +525,10 @@ function draw() {
     endShape();
   }
 
-  if (ubicacion_objetivo_aulas !== null && rutasZona.aulas[ubicacion_objetivo_aulas]) {
-    const ruta = rutasZona.aulas[ubicacion_objetivo_aulas];
-    noFill();
-    stroke('#004acc');
-    strokeWeight(6 / zoom);
-    beginShape();
-    for (const punto of ruta) {
-      vertex(punto.x - imgMapa.width / 2, punto.y - imgMapa.height / 2);
-    }
-    endShape();
-  }
-
-  const rutaObjetivo = ubicacion_objetivo_aulas !== null
-    ? rutasZona.aulas[ubicacion_objetivo_aulas]
-    : ubicacion_objetivo !== null
-      ? rutasZona.rutas[ubicacion_objetivo]
+  const rutaObjetivo = objetivosZona?.rutaDestino
+    ? rutasZona.aulas[objetivosZona.rutaDestino]
+    : objetivosZona?.rutaEdificio
+      ? rutasZona.rutas[objetivosZona.rutaEdificio]
       : null;
   if (rutaObjetivo && rutaObjetivo.length > 0) {
     const destino = rutaObjetivo[rutaObjetivo.length - 1];
