@@ -6,6 +6,8 @@ let accesible;
 let ascensor;
 let globo;
 let biblioteca;
+let voz;
+let alarma;
 //let zonaSimulada;
 
 const parametrosUbicacion = new URLSearchParams(window.location.search);
@@ -417,6 +419,8 @@ function preload() {
   encuentro = loadImage('img/icons/encuentro.png');
   salida = loadImage('img/icons/salida.png');
   biblioteca = loadImage('img/servicios/biblioteca.png');
+  voz = loadSound('audio/voz.mp3');
+  alarma = loadSound('audio/alarma.mp3');
 }
 
 function setup() {
@@ -441,6 +445,19 @@ function setup() {
   let canvasElem = canvas.elt;
   canvasElem.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
   canvasElem.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+
+  if (
+    window.location.pathname.split('/').pop() === 'map.html' &&
+    ubicacion_objetivo === 'emergencia'
+  ) {
+    userStartAudio()
+      .then(() => {
+        voz.setVolume(1.5);
+        voz.onended(() => alarma.play());
+        voz.play();
+      })
+      .catch((error) => console.error('No se pudo iniciar el audio de emergencia:', error));
+  }
 }
 
 function draw() {

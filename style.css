@@ -51,44 +51,56 @@
 .page-index {
     background-image: url('img/ingreso.png');
     background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
-    /*background-position: center center;*/
-    height: 100dvh;
-    width: 100vw;
+    min-height: 100vh;
+    min-height: 100svh;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    font-family: 'Inter';
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+.page-index main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
 }
 
 .main-index {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    width: 100%;
+    padding-top: clamp(1.5rem, 5vh, 3rem);
 }
 
 .logo-index {
-    width: 60%;
-    margin-top: 10%;
+    display: block;
+    width: min(60vw, 320px);
+    height: auto;
+    filter: drop-shadow(0 0 3px #ffffff);
 }
 
 .texto-index {
     font-weight: bold;
-    margin-top: 4%;
-    font-size: 1.3rem;
+    margin: 0.75rem 1rem 0;
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
     color: #004aac;
+    text-align: center;
+    -webkit-text-stroke: 1.5px #ffffff;
+    paint-order: stroke fill;
 }
 
 .index-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 130%;
-    margin-bottom: 20%;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 3% 0;
+    width: min(80%, 320px);
+    margin: auto auto clamp(1.5rem, 5vh, 3rem);
+    padding: 0.8rem 1rem;
     border-radius: 999px;
     background-color: #ffffff;
     color: #004aac;
