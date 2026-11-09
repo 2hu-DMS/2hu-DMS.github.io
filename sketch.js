@@ -1341,7 +1341,7 @@ function dibujarPuntoClick() {
   const x = width - ancho - margenDerecho;
   const y = height - alto - margenInferior;
 
-  noStroke();
+  /*noStroke();
   fill('#004aac');
   rect(x, y, ancho, alto, 8);
 
@@ -1353,7 +1353,7 @@ function dibujarPuntoClick() {
     `X: ${puntoClickMapa.x.toFixed(1)}   Y: ${puntoClickMapa.y.toFixed(1)}`,
     x + 12,
     y + 32
-  );
+  );*/
 }
 
 function errorGPS(err) {
