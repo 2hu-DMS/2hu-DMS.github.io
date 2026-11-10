@@ -6,6 +6,9 @@ let accesible;
 let ascensor;
 let globo;
 let biblioteca;
+let buffet;
+let fotocopia;
+let estacionar;
 let voz;
 let alarma;
 //let zonaSimulada;
@@ -15,8 +18,8 @@ let ubicacion_objetivo = parametrosUbicacion.get('ubicacion_objetivo');
 let ubicacion_objetivo_aulas = parametrosUbicacion.get('ubicacion_objetivo_aulas');
 
 // Paleta de colores para los bordes
-const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
-let indiceColorActual = 0; 
+//const colorEdificio = ['#000000', '#004aac', '#a311c0', '#e45c27'];
+//let indiceColorActual = 0; 
 
 // 1. Límites geográficos de la imagen del mapa (Calibración)
 const MAPA_NORTE = -34.648770; 
@@ -28,24 +31,24 @@ const MAPA_ESTE  = -58.772530;
 const ZONAS = [
   {
     nombre: "HISTORICO ALA ESTE",
-    latNorte: -34.651020, latSur: -34.651930,
-    lonOeste: -58.785925, lonEste: -58.774900,
+    latNorte: -34.651230, latSur: -34.651930,
+    lonOeste: -58.776800, lonEste: -58.774300,
     colorRelleno: 'rgba(0, 74, 172, 0.35)',
     colorBorde: '#004aac',
     indiceColor: 1
   },
   {
     nombre: "DARACT 1",
-    latNorte: -34.650131, latSur: -34.650785,
-    lonOeste: -58.775172, lonEste: -58.774890,
+    latNorte: -34.649500, latSur: -34.651220,
+    lonOeste: -58.775600, lonEste: -58.774890,
     colorRelleno: 'rgba(163, 17, 192, 0.35)',
     colorBorde: '#a311c0',
     indiceColor: 2
   },
   {
     nombre: "DARACT 2",
-    latNorte: -34.650727, latSur: -34.651311,
-    lonOeste: -58.774560, lonEste: -58.774328,
+    latNorte: -34.650100, latSur: -34.651220,
+    lonOeste: -58.774887, lonEste: -58.774200,
     colorRelleno: 'rgba(228, 92, 39, 0.35)',
     colorBorde: '#e45c27',
     indiceColor: 3
@@ -419,6 +422,9 @@ function preload() {
   encuentro = loadImage('img/icons/encuentro.png');
   salida = loadImage('img/icons/salida.png');
   biblioteca = loadImage('img/servicios/biblioteca.png');
+  fotocopia = loadImage('img/servicios/fotocopia.png')
+  estacionar = loadImage('img/servicios/estacionamiento.png')
+  buffet = loadImage('img/servicios/buffet.png')
   voz = loadSound('audio/voz.mp3');
   alarma = loadSound('audio/alarma.mp3');
 }
@@ -467,7 +473,7 @@ function draw() {
   push();
   translate(panX, panY);
   scale(zoom);
-  //rotate(anguloRotacion);
+  rotate(anguloRotacion);
 
   imageMode(CENTER);
   image(imgMapa, 0, 0);
@@ -549,13 +555,12 @@ function draw() {
       : null;
   if (rutaObjetivo && rutaObjetivo.length > 0) {
     const destino = rutaObjetivo[rutaObjetivo.length - 1];
-    image(
-      globo,
-      destino.x - imgMapa.width / 2,
-      destino.y - imgMapa.height / 2,
-      66,
-      132
-    );
+    push();
+    translate(destino.x - imgMapa.width / 2,
+      destino.y - imgMapa.height / 2);
+    rotate(-anguloRotacion);
+    image(globo, 0, -32, 66, 132);
+      pop();
   }
   ///ACTUALIZACION NUEVA 7-11-2026 FIN///
 
@@ -580,7 +585,7 @@ function draw() {
   function dibujarCartelIcono(fnDibujo, x, y, w, h) {
     push();
     translate(x, y);
-    //rotate(-anguloRotacion); 
+    rotate(-anguloRotacion); 
     fnDibujo();
     pop();
   }
@@ -588,7 +593,7 @@ function draw() {
   function dibujarEdifiNom(fnDibujo, x, y, w, h) {
     push();
     translate(x, y);
-    //rotate(-anguloRotacion); 
+    rotate(-anguloRotacion); 
     scale(1 / zoom);         
     fnDibujo();
     pop();
@@ -970,6 +975,21 @@ function draw() {
     text(`Carpa`, 0, 2);
   }, -1453, 210);
 
+  // --- BUFFET VIEJO ---
+  dibujarCartelIcono(() => {
+    fill('#004acc');
+    rect(0, 0, 85, 56, 7);
+    fill(255);
+    textLeading(10);
+    textSize(18);
+    text(`Buffet\n\nViejo`, 0, 0);
+  }, -1111,-210);
+
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(buffet, 0, 0, 50, 50);
+  }, -1111, -300);
+
   // --- EDITORA ---
   dibujarCartelIcono(() => {
     fill('#004aac');
@@ -994,11 +1014,126 @@ function draw() {
     image(salida, 0, 0, 30, 30);
   }, -2045, 303);
 
+  // --- ASCENSOR ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(ascensor, 0, 0, 50, 50);
+  }, -2030, 470);
+
+  // --- A001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`A001`, 0, 2);
+  }, -2115, 494);
+
+  // --- A002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`A002`, 0, 2);
+  }, -2220, 494);
+
+  // --- A003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`A003`, 0, 2);
+  }, -2140, 170);
+
+  // --- A004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`A004`, 0, 2);
+  }, -2320, 367);
+
+  // --- A005 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 60, 35, 7);
+    fill(255);
+    textSize(16);
+    text(`A005`, 0, 2);
+  }, -2400, 367);
+
+  // --- BUFFET NUEVO ---
+  dibujarCartelIcono(() => {
+    fill('#004acc');
+    rect(0, 0, 85, 56, 7);
+    fill(255);
+    textLeading(10);
+    textSize(18);
+    text(`Buffet\n\nNuevo`, 0, 0);
+  }, -2443,-10);
+
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(buffet, 0, 0, 50, 50);
+  }, -2443, -100);
+
+  // --- FOTOCOPIADORA ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(fotocopia, 0, 0, 50, 50);
+  }, -2250, -115);
+
   // --- SALIDA B ---
   dibujarCartelIcono(() => {
     imageMode(CENTER);
     image(salida, 0, 0, 30, 30);
   }, -2443, 275);
+
+  // --- B001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`B001`, 0, 2);
+  }, -2491, 494);
+
+  // --- B002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`B002`, 0, 2);
+  }, -2596, 494);
+
+  // --- B004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 60, 35, 7);
+    fill(255);
+    textSize(16);
+    text(`B004`, 0, 2);
+  }, -2615, 367);
+
+  // --- BANIOS B---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 50, 50);
+  }, -2460, 365);
+
+  // --- ALUMNOS ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 95, 50, 7);
+    fill(255);
+    textLeading(9);
+    textSize(16);
+    text(`Depart. de\n\nAlumnos`, 0, 0);
+  }, -2515, 200);
 
   // --- SALIDA C ---
   dibujarCartelIcono(() => {
@@ -1006,17 +1141,154 @@ function draw() {
     image(salida, 0, 0, 30, 30);
   }, -2796, 303);
 
+  // --- C001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`C001`, 0, 2);
+  }, -2920, 494);
+
+  // --- C003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`C003`, 0, 2);
+  }, -2700, 367);
+
+  // --- C004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`C004`, 0, 2);
+  }, -2992, 367);
+
+  // --- C005 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`C005`, 0, 2);
+  }, -3120, 367);
+
+  // --- BANIOS B---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 30, 30);
+  }, -2782, 350);
+
+  // --- BIBLIOTECA SILECIOSA---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(biblioteca, 0, 0, 50, 50);
+  }, -2891, 150);
+
+  // --- BIBLIOTECA SILECIOSA ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 90, 50, 7);
+    fill(255);
+    textLeading(9);
+    textSize(16);
+    text(`Biblioteca\n\nSilenciosa`, 0, 2);
+  }, -2891, 250);
+
   // --- SALIDA D ---
   dibujarCartelIcono(() => {
     imageMode(CENTER);
     image(salida, 0, 0, 30, 30);
   }, -3170, 303);
+  
+  // --- D001 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`D001`, 0, 2);
+  }, -3265, 170);
+
+  // --- D002 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`D002`, 0, 2);
+  }, -3375, 367);
+
+  // --- D003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`D003`, 0, 2);
+  }, -3500, 367);
+
+  // --- D004 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 80, 50, 7);
+    fill(255);
+    textSize(24);
+    text(`D004`, 0, 2);
+  }, -3580, 485);
+
+  // --- D005 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 60, 35, 7);
+    fill(255);
+    textSize(16);
+    text(`D005`, 0, 2);
+  }, -3655, 485);
 
   // --- SALIDA E NORTE ---
   dibujarCartelIcono(() => {
     imageMode(CENTER);
     image(salida, 0, 0, 30, 30);
   }, -3725, 303);
+
+  // --- BANIOS E ---
+  dibujarCartelIcono(() => {
+    imageMode(CENTER);
+    image(banios, 0, 0, 35, 35);
+  }, -3740, 350);
+
+  // --- ENFERMERIA ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 30, 7);
+    fill(255);
+    textSize(16);
+    text(`Enfermería`, 0, 0);
+  }, -3870, 370);
+
+  // --- BIENESTAR ESTUDIANTIL ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 100, 50, 7);
+    fill(255);
+    textLeading(9);
+    textSize(16);
+    text(`Bienestar y\n\nAs. Estud.`, 0, 2);
+  }, -3805, 485);
+
+  // --- E003 ---
+  dibujarCartelIcono(() => {
+    fill('#004aac');
+    rect(0, 0, 60, 35, 7);
+    fill(255);
+    textSize(16);
+    text(`E003`, 0, 2);
+  }, -3960, 367);
 
    // --- SALIDA E SUR ---
   dibujarCartelIcono(() => {
@@ -1157,6 +1429,10 @@ function draw() {
   }, 100, -1700);
 
   // --- ENCUENTRO --- 00000000000000000000000000000000000000 DORREGO 1 000000000000000000000000
+  dibujarEdifiNom(() => {
+    imageMode(CENTER);
+    image(estacionar, 0, 0, 50, 50);
+  }, -3950, -2590);
 
   dibujarEdifiNom(() => {
     fill('#004aac');
@@ -1166,13 +1442,22 @@ function draw() {
     text(`DORREGO 1`, 0, 0);
   }, -3223, -1900);
 
+  dibujarEdifiNom(() => {
+    fill('#004aac');
+    rect(0, 0, 170, 60, 7);
+    fill(255);
+    textSize(18);
+    textLeading(10);
+    text(`LABORATORIOS`, 0, 0);
+  }, 2200, 0);
+
   pop(); // Fin de la matriz principal del mapa
 
   // --- APLICAR RESTRICCIONES DE MOVIMIENTO (BOUNDS) ---
   aplicarRestriccionesMapa();
 
   // --- EVALUACIÓN DE ZONAS / EDIFICIOS ---
-  indiceColorActual = 0; 
+  /*indiceColorActual = 0; 
   for (let zona of ZONAS) {
     if (miLatitud <= zona.latNorte && miLatitud >= zona.latSur &&
         miLongitud >= zona.lonOeste && miLongitud <= zona.lonEste) {
@@ -1186,11 +1471,21 @@ function draw() {
   stroke(colorEdificio[indiceColorActual]);
   strokeWeight(10);
   noFill();
-  rect(0, 0, width, height);
+  rect(0, 0, width, height);*/
 
   // --- INTERFAZ ---
   dibujarInterfaz();
-  dibujarPuntoClick(); //<---------------------------------------ESTA DIBUJA EL CARTEL CON LOS PIXELES
+  //dibujarPuntoClick(); //<---------------------------------------ESTA DIBUJA EL CARTEL CON LOS PIXELES
+}
+
+function cambiarRotacion() {
+  // Sumar 90 grados (PI / 2 radianes)
+  anguloRotacion += HALF_PI;
+
+  // Reiniciar al llegar a 360 grados
+  if (anguloRotacion >= TWO_PI) {
+    anguloRotacion = 0;
+  }
 }
 
 /**
@@ -1286,11 +1581,11 @@ function touchMoved() {
     }
 
     // Calcular el nuevo ángulo y aplicar la rotación tomando el centro de la pantalla como eje
-    let anguloActual = atan2(touches[1].y - touches[0].y, touches[1].x - touches[0].x);
-    let deltaAngulo = anguloActual - anguloInicialToque;
+    //let anguloActual = atan2(touches[1].y - touches[0].y, touches[1].x - touches[0].x);
+    //let deltaAngulo = anguloActual - anguloInicialToque;
     
     // Aplicamos el cambio de rotación
-    anguloRotacion = rotacionInicial + deltaAngulo;
+    //anguloRotacion = rotacionInicial + deltaAngulo;
   }
   return false;
 }
@@ -1305,6 +1600,7 @@ function touchStarted() {
 }
 
 // TEMPORAL: quitar esta funcion y la variable puntoClickMapa cuando ya no se necesiten.
+
 function mousePressed() {
   const dx = mouseX - panX;
   const dy = mouseY - panY;
@@ -1348,7 +1644,7 @@ function dibujarInterfaz() {
 }
 
 // TEMPORAL: muestra las coordenadas del ultimo clic, separadas del panel GPS.
-function dibujarPuntoClick() {
+/*function dibujarPuntoClick() {
   if (!puntoClickMapa) return;
 
   const ancho = 230;
@@ -1358,7 +1654,7 @@ function dibujarPuntoClick() {
   const x = width - ancho - margenDerecho;
   const y = height - alto - margenInferior;
 
-  /*noStroke();
+  noStroke();
   fill('#004aac');
   rect(x, y, ancho, alto, 8);
 
@@ -1370,8 +1666,8 @@ function dibujarPuntoClick() {
     `X: ${puntoClickMapa.x.toFixed(1)}   Y: ${puntoClickMapa.y.toFixed(1)}`,
     x + 12,
     y + 32
-  );*/
-}
+  );
+}*/
 
 function errorGPS(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
